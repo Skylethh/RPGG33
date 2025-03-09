@@ -1,0 +1,331 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%);
+}
+
+/* Hero Section */
+.heroSection {
+  position: relative;
+  padding: 7rem 0 5rem;
+  text-align: center;
+  background-image: url('/images/fantasy-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(10, 10, 20, 0.7), rgba(15, 15, 35, 0.85));
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  color: #ffa500;
+  text-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
+}
+
+.heroDecoration {
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffa500, transparent);
+  margin: 0 auto;
+}
+
+/* Main Content */
+.mainContent {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  flex: 1;
+  transform: translateY(-3rem);
+}
+
+/* Options Grid */
+.optionsSection {
+  margin-bottom: 3rem;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.optionsGrid.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.optionCard {
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.optionCardInner {
+  background: rgba(20, 20, 35, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(255, 165, 0, 0.1);
+  padding: 2rem;
+}
+
+.optionCardInner:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(255, 165, 0, 0.2);
+  border-color: rgba(255, 165, 0, 0.4);
+}
+
+.optionImageContainer {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 1.5rem;
+}
+
+.optionImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e, #0d1117);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border: 2px solid rgba(255, 165, 0, 0.4);
+}
+
+.optionGlow {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(255, 165, 0, 0.2) 0%, rgba(255, 165, 0, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.optionCardInner:hover .optionGlow {
+  opacity: 1;
+}
+
+.optionIcon {
+  font-size: 3.5rem;
+  color: #ffa500;
+  filter: drop-shadow(0 0 5px rgba(255, 165, 0, 0.5));
+  transition: all 0.4s ease;
+}
+
+.optionCardInner:hover .optionIcon {
+  transform: scale(1.1);
+  color: #ffcc00;
+}
+
+.optionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #ffa500;
+}
+
+.optionDescription {
+  font-size: 1rem;
+  text-align: center;
+  color: #d0d0d0;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.optionButton {
+  background: rgba(255, 165, 0, 0.2);
+  color: #ffa500;
+  padding: 0.8rem 0;
+  border-radius: 50px;
+  text-align: center;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.optionCardInner:hover .optionButton {
+  background: linear-gradient(90deg, rgba(255, 165, 0, 0.8), rgba(255, 100, 0, 0.8));
+  color: #0d1117;
+  border-color: transparent;
+}
+
+/* Tips Section */
+.tipsContainer {
+  background: rgba(20, 20, 40, 0.6);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 165, 0, 0.1);
+}
+
+.tipsToggle {
+  width: 100%;
+  background: rgba(20, 20, 40, 0.9);
+  border: none;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffa500;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.tipsToggle:hover {
+  background: rgba(255, 165, 0, 0.1);
+}
+
+.toggleIconContainer {
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 165, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.diceIcon {
+  color: #ffa500;
+  font-size: 1.2rem;
+}
+
+.chevronIcon {
+  margin-left: auto;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.tipsContent {
+  padding: 2rem;
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tipsContent h3 {
+  font-size: 1.5rem;
+  color: #ffa500;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.tipsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.tipItem {
+  display: flex;
+  align-items: flex-start;
+}
+
+.tipIcon {
+  min-width: 10px;
+  height: 10px;
+  background: #ffa500;
+  border-radius: 50%;
+  margin: 8px 12px 0 0;
+}
+
+.tipText {
+  color: #d0d0d0;
+  line-height: 1.6;
+}
+
+.tipText strong {
+  color: #ffa500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 3rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tipsList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  
+  .mainContent {
+    transform: translateY(-1.5rem);
+  }
+}

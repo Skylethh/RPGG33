@@ -1,0 +1,273 @@
+/* Home.module.css - Additional styling specific to the home page */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Hero section specific styles */
+.heroWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+}
+
+.heroTitle {
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  display: inline-block;
+}
+
+.heroDescription {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Animated elements */
+.floatingIcon {
+  position: absolute;
+  opacity: 0.2;
+  animation: floatAnimation 8s ease-in-out infinite;
+}
+
+.floatingIcon1 {
+  position: absolute;
+  opacity: 0.2;
+  animation: floatAnimation 8s ease-in-out infinite;
+  top: 20%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.floatingIcon2 {
+  position: absolute;
+  opacity: 0.2;
+  animation: floatAnimation 8s ease-in-out infinite;
+  bottom: 30%;
+  left: 5%;
+  animation-delay: 2s;
+}
+
+.floatingIcon3 {
+  position: absolute;
+  opacity: 0.2;
+  animation: floatAnimation 8s ease-in-out infinite;
+  top: 15%;
+  left: 12%;
+  animation-delay: 4s;
+}
+
+.floatingIcon4 {
+  position: absolute;
+  opacity: 0.2;
+  animation: floatAnimation 8s ease-in-out infinite;
+  bottom: 10%;
+  right: 15%;
+  animation-delay: 6s;
+}
+
+/* Card hover effects */
+.ruleCard {
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ruleCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Enhanced plan cards */
+.planCard {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.planCardPremium {
+  position: relative;
+}
+
+.planCardPremium::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--accent-color), var(--primary-color), var(--accent-color));
+  border-radius: 16px;
+  z-index: -1;
+  filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.planCardPremium:hover::before {
+  opacity: 1;
+}
+
+/* Feature highlight animation */
+.featureHighlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.featureHighlight::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: all 0.4s ease;
+}
+
+.featureHighlight:hover::after {
+  left: 100%;
+}
+
+/* Parallax section */
+.parallaxSection {
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 120px 0;
+  margin: 60px 0;
+}
+
+.parallaxOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 18, 18, 0.7);
+}
+
+.parallaxContent {
+  position: relative;
+  z-index: 2;
+  color: var(--text-light);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Animation keyframes */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Testimonial section */
+.testimonialSection {
+  background-color: rgba(25, 25, 35, 0.8);
+  padding: 80px 0;
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.testimonialCard {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.testimonialCard::before {
+  content: '"';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 60px;
+  font-family: var(--font-title);
+  color: rgba(255, 255, 255, 0.1);
+  line-height: 0;
+}
+
+.testimonialAuthor {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.testimonialAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  background-color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.testimonialName {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.testimonialRole {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(135deg, var(--primary-dark), var(--bg-dark));
+  padding: 80px 0;
+  text-align: center;
+  margin: 50px 0 0 0;
+}
+
+.ctaTitle {
+  margin-bottom: 20px;
+  font-size: 2.8rem;
+}
+
+.ctaDescription {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  font-size: 1.2rem;
+}
+
+.ctaButton {
+  font-size: 1.2rem;
+  padding: 15px 40px;
+  background-color: var(--accent-color);
+  border-radius: 50px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ctaTitle {
+    font-size: 2.2rem;
+  }
+}
