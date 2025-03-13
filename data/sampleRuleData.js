@@ -10,15 +10,21 @@ export function initializeRuleBook() {
   const rulebook = new RuleBook();
   
   // Add sample races
-  rulebook.addRace(new Race(
-    "human",
-    "Human",
-    "Versatile and adaptable, humans are the most widespread race in the realms.",
-    [{ name: "Versatility", description: "Humans can add +1 to all ability scores or +2 to one ability score and +1 to another." }],
-    { strength: 1, dexterity: 1, constitution: 1, intelligence: 1, wisdom: 1, charisma: 1 },
-    ["Adaptable", "Ambitious"],
-    "Humans are the most adaptable and ambitious people among the common races. They have widely varying tastes, morals, and customs in the many different lands where they have settled."
-  ));
+  // İnsan ırkının yeteneklerini güncelleme
+
+rulebook.addRace(new Race(
+  "human",
+  "Human",
+  "Versatile and adaptable, humans are the most widespread race in the realms.",
+  [
+      
+    { name: "Determination", description: "Once per day when you fail an ability check, saving throw, or attack roll, you can reroll the d20 and use the higher result." },
+    { name: "Cultural Adaptability", description: "You gain advantage on Charisma checks when interacting with members of other races." }
+  ],
+  { strength: 1, dexterity: 1, constitution: 1, intelligence: 1, wisdom: 1, charisma: 1 },
+  ["Adaptable", "Ambitious", "Diverse"],
+  "Humans are the most adaptable and ambitious people among the common races. They have widely varying tastes, morals, and customs in the many different lands where they have settled."
+));
   
   rulebook.addRace(new Race(
     "elf",

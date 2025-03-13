@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import styles from '../styles/CharacterCreation.module.css';
 import { initializeRuleBook } from '../data/sampleRuleData';
 
+
 export default function CreateCharacter() {
   const router = useRouter();
   const rulebook = initializeRuleBook();
@@ -19,18 +20,27 @@ export default function CreateCharacter() {
     race: '',
     class: '',
     abilities: {
-      strength: 10,
-      dexterity: 10,
-      constitution: 10,
-      intelligence: 10,
-      wisdom: 10,
-      charisma: 10
+      strength: 8,
+      dexterity: 8,
+      constitution: 8,
+      intelligence: 8,
+      wisdom: 8,
+      charisma: 8
     },
     skills: [],
     languages: [],
     background: '',
     equipment: []
   });
+
+  // Başlangıçta kullanılan puanları hesapla
+useEffect(() => {
+  const initialPoints = Object.values(character.abilities).reduce(
+    (total, value) => total + (value - 8),  // 10 yerine 8
+    0
+  );
+  setUsedAbilityPoints(initialPoints);
+}, []);
 
   // Step labels for the progress indicator
   const steps = [
@@ -48,6 +58,21 @@ export default function CreateCharacter() {
   };
 
   const updateAbility = (ability, value) => {
+    // Önceki değeri al
+    const currentValue = character.abilities[ability];
+    
+    // Yeni puan farkını hesapla
+    const pointDifference = value - currentValue;
+    
+    // Yeni toplam kullanılan puanları hesapla
+    const newTotalPoints = usedAbilityPoints + pointDifference;
+    
+    // Eğer toplam puan limitini aşıyorsa ve puan artırılıyorsa engelle
+    if (newTotalPoints > MAX_ABILITY_POINTS && pointDifference > 0) {
+      return;
+    }
+    
+    // Değeri güncelle
     setCharacter(prev => ({
       ...prev,
       abilities: {
@@ -55,6 +80,9 @@ export default function CreateCharacter() {
         [ability]: value
       }
     }));
+    
+    // Kullanılan puanları güncelle
+    setUsedAbilityPoints(newTotalPoints);
   };
 
   const toggleLanguage = (language) => {
@@ -209,67 +237,80 @@ export default function CreateCharacter() {
           </div>
         );
       
-      case 2:
-        return (
-          <div className={styles.creatorStep}>
-            <h2>Ability Scores</h2>
-            <p>Distribute your character's ability scores. These values represent your character's natural talents and capabilities.</p>
-            
-            <div className={styles.abilitiesGrid}>
-              {Object.keys(character.abilities).map(ability => (
-                <div key={ability} className={styles.abilityItem}>
-                  <label htmlFor={ability}>
-                    {ability.charAt(0).toUpperCase() + ability.slice(1)}
-                  </label>
-                  <div className={styles.abilityControls}>
-                    <button
-                      type="button"
-                      onClick={() => updateAbility(ability, Math.max(3, character.abilities[ability] - 1))}
-                      disabled={character.abilities[ability] <= 3}
-                    >
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      id={ability}
-                      value={character.abilities[ability]}
-                      onChange={(e) => updateAbility(ability, Math.max(3, Math.min(18, parseInt(e.target.value) || 0)))}
-                      min="3"
-                      max="18"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => updateAbility(ability, Math.min(18, character.abilities[ability] + 1))}
-                      disabled={character.abilities[ability] >= 18}
-                    >
-                      +
-                    </button>
+        case 2:
+          return (
+            <div className={styles.creatorStep}>
+  <h2>Ability Scores</h2>
+  <p>Distribute your character's ability scores. Starting from 8, you can increase each ability up to 15.</p>
+  
+  {/* Puan göstergesini güncelleyin */}
+  <div className={styles.pointsIndicator}>
+    <div className={styles.pointsLabel}>
+      Available Points: <span className={styles.pointsValue}>{MAX_ABILITY_POINTS - usedAbilityPoints}</span>/{MAX_ABILITY_POINTS}
+    </div>
+    <div className={styles.pointsBar}>
+      <div 
+        className={styles.pointsFill} 
+        style={{ width: `${(usedAbilityPoints / MAX_ABILITY_POINTS) * 100}%` }}
+      ></div>
+    </div>
+  </div>
+              
+              <div className={styles.abilitiesGrid}>
+                {Object.keys(character.abilities).map(ability => (
+                  <div key={ability} className={styles.abilityItem}>
+                    <label htmlFor={ability}>
+                      {ability.charAt(0).toUpperCase() + ability.slice(1)}
+                    </label>
+                    <div className={styles.abilityControls}>
+                      <button
+                        type="button"
+                        onClick={() => updateAbility(ability, Math.max(3, character.abilities[ability] - 1))}
+                        disabled={character.abilities[ability] <= 3}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        id={ability}
+                        value={character.abilities[ability]}
+                        onChange={(e) => updateAbility(ability, Math.max(3, Math.min(15, parseInt(e.target.value) || 0)))}
+                        min="3"
+                        max="15"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => updateAbility(ability, Math.min(15, character.abilities[ability] + 1))}
+                        disabled={character.abilities[ability] >= 15 || usedAbilityPoints >= MAX_ABILITY_POINTS}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className={styles.abilityModifier}>
+                      Modifier: {formatModifier(getModifier(character.abilities[ability]))}
+                    </div>
                   </div>
-                  <div className={styles.abilityModifier}>
-                    Modifier: {formatModifier(getModifier(character.abilities[ability]))}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              <div className={styles.formActions}>
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className={styles.buttonSecondary}
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className={styles.buttonPrimary}
+                >
+                  Next: Skills & Languages
+                </button>
+              </div>
             </div>
-            
-            <div className={styles.formActions}>
-              <button
-                type="button"
-                onClick={prevStep}
-                className={styles.buttonSecondary}
-              >
-                Back
-              </button>
-              <button
-                type="button"
-                onClick={nextStep}
-                className={styles.buttonPrimary}
-              >
-                Next: Skills & Languages
-              </button>
-            </div>
-          </div>
-        );
+          );
       
       case 3:
         return (
@@ -330,39 +371,99 @@ export default function CreateCharacter() {
             <h2>Character Summary</h2>
             <p>Review your character before finalizing.</p>
             
-            <div className={styles.characterSummary}>
-              <h3>{character.name}</h3>
-              <div className={styles.characterType}>
-                {rulebook.races.find(r => r.id === character.race)?.name} {rulebook.classes.find(c => c.id === character.class)?.name}
-              </div>
-              
-              <h4>Abilities</h4>
-              <div className={styles.abilitiesSummary}>
-                {Object.keys(character.abilities).map(ability => (
-                  <div key={ability} className={styles.abilitySummaryItem}>
-                    <div className={styles.abilityName}>{ability.substr(0, 3)}</div>
-                    <div className={styles.abilityScore}>{character.abilities[ability]}</div>
-                    <div className={styles.abilityMod}>{formatModifier(getModifier(character.abilities[ability]))}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <h4>Languages</h4>
-              <ul>
-                {character.languages.map(langId => (
-                  <li key={langId}>
-                    {rulebook.languages.find(l => l.id === langId)?.name}
-                  </li>
-                ))}
-              </ul>
-              
-              {character.background && (
-                <>
-                  <h4>Background</h4>
-                  <p>{character.background}</p>
-                </>
-              )}
-            </div>
+            
+
+<div className={styles.characterSummary}>
+  <h3>{character.name}</h3>
+  <div className={styles.characterType}>
+    {rulebook.races.find(r => r.id === character.race)?.name} {rulebook.classes.find(c => c.id === character.class)?.name}
+  </div>
+
+  
+
+
+
+<h4 className={styles.sectionHeader}>Abilities</h4>
+<div className={styles.abilitiesSummary}>
+  {/* İlk sıra: STR, DEX, CON */}
+  {['strength', 'dexterity', 'constitution'].map(ability => {
+    const raceBonus = rulebook.races.find(r => r.id === character.race)?.statBonuses[ability] || 0;
+    const totalValue = character.abilities[ability] + raceBonus;
+    
+    return (
+      <div key={ability} className={styles.abilitySummaryItem}>
+        <div className={styles.abilityName}>{ability.substr(0, 3).toUpperCase()}</div>
+        <div className={styles.abilityValue}>
+          <div className={styles.abilityTotal}>{totalValue}</div>
+          <div className={styles.abilityDetails}>
+            {character.abilities[ability]} 
+            {raceBonus > 0 && <span className={styles.racialBonus}>+{raceBonus}</span>}
+          </div>
+        </div>
+        <div className={styles.abilityMod}>
+          <span className={styles.modifierLabel}>MOD</span>
+          <span className={styles.modifierValue}>{formatModifier(getModifier(totalValue))}</span>
+        </div>
+      </div>
+    );
+  })}
+  
+  {/* İkinci sıra: INT, WIS, CHA */}
+  {['intelligence', 'wisdom', 'charisma'].map(ability => {
+    const raceBonus = rulebook.races.find(r => r.id === character.race)?.statBonuses[ability] || 0;
+    const totalValue = character.abilities[ability] + raceBonus;
+    
+    return (
+      <div key={ability} className={styles.abilitySummaryItem}>
+        <div className={styles.abilityName}>{ability.substr(0, 3).toUpperCase()}</div>
+        <div className={styles.abilityValue}>
+          <div className={styles.abilityTotal}>{totalValue}</div>
+          <div className={styles.abilityDetails}>
+            {character.abilities[ability]} 
+            {raceBonus > 0 && <span className={styles.racialBonus}>+{raceBonus}</span>}
+          </div>
+        </div>
+        <div className={styles.abilityMod}>
+          <span className={styles.modifierLabel}>MOD</span>
+          <span className={styles.modifierValue}>{formatModifier(getModifier(totalValue))}</span>
+        </div>
+      </div>
+    );
+  })}
+</div>
+  
+  <h4 className={styles.sectionHeader}>Racial Traits</h4>
+  <ul className={styles.traitsList}>
+    {rulebook.races.find(r => r.id === character.race)?.traits.map(trait => (
+      <li key={trait}>{trait}</li>
+    ))}
+  </ul>
+  
+  <h4 className={styles.sectionHeader}>Racial Abilities</h4>
+  <ul className={styles.abilitiesList}>
+    {rulebook.races.find(r => r.id === character.race)?.abilities.map(ability => (
+      <li key={ability.name}>
+        <strong>{ability.name}:</strong> {ability.description}
+      </li>
+    ))}
+  </ul>
+  
+  <h4 className={styles.sectionHeader}>Languages</h4>
+  <ul className={styles.languagesList}>
+    {character.languages.map(langId => (
+      <li key={langId}>
+        {rulebook.languages.find(l => l.id === langId)?.name}
+      </li>
+    ))}
+  </ul>
+  
+  {character.background && (
+    <>
+      <h4 className={styles.sectionHeader}>Background</h4>
+      <p className={styles.backgroundText}>{character.background}</p>
+    </>
+  )}
+</div>
             
             <div className={styles.formActions}>
               <button

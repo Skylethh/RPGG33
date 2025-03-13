@@ -13,3 +13,164 @@
   font-size: 1.2rem;
   text-align: center;
 }
+
+/* Irksal bonusları göstermek için yeni stiller */
+
+.racialBonus {
+  font-size: 0.9rem;
+  color: #f0a742;
+  margin-left: 2px;
+}
+
+.totalScore {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  border-top: 1px solid rgba(240, 167, 66, 0.3);
+  padding-top: 0.3rem;
+  margin-top: 0.3rem;
+}
+/* Başlık stillerini daha belirgin hale getirme */
+
+.sectionHeader {
+  margin: 2rem 0 1rem;
+  color: #f0a742;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(240, 167, 66, 0.3);
+  padding-bottom: 0.6rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+}
+
+/* Ability kartlarını iyileştirme */
+.abilitiesSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.abilitySummaryItem {
+  background: rgba(30, 30, 50, 0.7);
+  border-radius: 10px;
+  padding: 1.2rem 0.8rem;
+  text-align: center;
+  border: 1px solid rgba(240, 167, 66, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.abilitySummaryItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(240, 167, 66, 0.4);
+}
+
+.abilityName {
+  font-weight: 700;
+  color: #f0a742;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5rem;
+}
+
+.abilityValue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.abilityTotal {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.abilityDetails {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin: 0.2rem 0;
+}
+
+.racialBonus {
+  font-size: 0.9rem;
+  color: #f0a742;
+  margin-left: 3px;
+  font-weight: 600;
+}
+
+.abilityMod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(20, 20, 35, 0.5);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(240, 167, 66, 0.2);
+}
+
+.modifierLabel {
+  font-size: 0.7rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modifierValue {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #f0a742;
+}
+
+/* Liste stillerini iyileştirme */
+.traitsList,
+.abilitiesList,
+.languagesList {
+  list-style-type: disc;
+  padding-left: 1.8rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+.abilitiesList li,
+.languagesList li {
+  margin-bottom: 0.8rem;
+}
+
+.abilitiesList strong {
+  color: #f0a742;
+  font-weight: 600;
+}
+/* Başlık stillerini daha belirgin ve turuncu yapma */
+
+.sectionHeader {
+  margin: 2rem 0 1rem;
+  color: #ff9800; /* Turuncu renk */
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 152, 0, 0.4); /* Turuncu transparant alt çizgi */
+  padding-bottom: 0.6rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.sectionHeader::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 60px;
+  height: 2px;
+  background-color: #ff9800; /* Turuncu renk */
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { initializeRuleBook } from '../../data/sampleRuleData';
+import { useState, useEffect } from 'react';
 
 export default function CharacterCreator() {
   const rulebook = initializeRuleBook();
@@ -9,7 +10,7 @@ export default function CharacterCreator() {
     race: '',
     class: '',
     abilities: {
-      strength: 10,
+      strength: 18,
       dexterity: 10,
       constitution: 10,
       intelligence: 10,
@@ -29,6 +30,21 @@ export default function CharacterCreator() {
   };
 
   const updateAbility = (ability, value) => {
+    // Önceki değeri al
+    const currentValue = character.abilities[ability];
+    
+    // Yeni puan farkını hesapla
+    const pointDifference = value - currentValue;
+    
+    // Yeni toplam kullanılan puanları hesapla
+    const newTotalPoints = usedAbilityPoints + pointDifference;
+    
+    // Eğer toplam puan limitini aşıyorsa ve puan artırılıyorsa engelle
+    if (newTotalPoints > MAX_ABILITY_POINTS && pointDifference > 0) {
+      return;
+    }
+    
+    // Değeri güncelle
     setCharacter(prev => ({
       ...prev,
       abilities: {
@@ -36,6 +52,9 @@ export default function CharacterCreator() {
         [ability]: value
       }
     }));
+    
+    // Kullanılan puanları güncelle
+    setUsedAbilityPoints(newTotalPoints);
   };
 
   const nextStep = () => {
@@ -99,46 +118,80 @@ export default function CharacterCreator() {
             </div>
           </div>
         );
-      case 2:
-        return (
-          <div className="creator-step">
-            <h2>Choose Your Class</h2>
-            
-            <div className="form-group">
-              <label htmlFor="characterClass">Class</label>
-              <select 
-                id="characterClass" 
-                value={character.class} 
-                onChange={(e) => updateCharacter('class', e.target.value)}
-              >
-                <option value="">Select a class</option>
-                {rulebook.classes.map(characterClass => (
-                  <option key={characterClass.id} value={characterClass.id}>{characterClass.name}</option>
-                ))}
-              </select>
-            </div>
-            
-            {character.class && (
-              <div className="selected-class-info">
-                <h3>Class Information</h3>
-                <p>{rulebook.getClassByName(character.class)?.description}</p>
-                <h4>Primary Ability</h4>
-                <p>{rulebook.getClassByName(character.class)?.primaryAbility.charAt(0).toUpperCase() + rulebook.getClassByName(character.class)?.primaryAbility.slice(1)}</p>
-                <h4>Hit Die</h4>
-                <p>{rulebook.getClassByName(character.class)?.hitDie}</p>
+        case 2:
+          return (
+            <div className={styles.creatorStep}>
+              <h2>Ability Scores</h2>
+              <p>Distribute your character's ability scores. These values represent your character's natural talents and capabilities.</p>
+              
+              {/* Puan göstergesini ekleyin */}
+              <div className={styles.pointsIndicator}>
+                <div className={styles.pointsLabel}>
+                  Available Points: <span className={styles.pointsValue}>{MAX_ABILITY_POINTS - usedAbilityPoints}</span>/{MAX_ABILITY_POINTS}
+                </div>
+                <div className={styles.pointsBar}>
+                  <div 
+                    className={styles.pointsFill} 
+                    style={{ width: `${(usedAbilityPoints / MAX_ABILITY_POINTS) * 100}%` }}
+                  ></div>
+                </div>
               </div>
-            )}
-            
-            <div className="form-actions">
-              <button className="btn secondary-btn" onClick={prevStep}>
-                Back
-              </button>
-              <button className="btn primary-btn" onClick={nextStep} disabled={!character.class}>
-                Next: Ability Scores
-              </button>
+              
+              <div className={styles.abilitiesGrid}>
+                {Object.keys(character.abilities).map(ability => (
+                  <div key={ability} className={styles.abilityItem}>
+                    <label htmlFor={ability}>
+                      {ability.charAt(0).toUpperCase() + ability.slice(1)}
+                    </label>
+                    <div className={styles.abilityControls}>
+                      <button
+                        type="button"
+                        onClick={() => updateAbility(ability, Math.max(3, character.abilities[ability] - 1))}
+                        disabled={character.abilities[ability] <= 3}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        id={ability}
+                        value={character.abilities[ability]}
+                        onChange={(e) => updateAbility(ability, Math.max(3, Math.min(15, parseInt(e.target.value) || 0)))}
+                        min="3"
+                        max="15"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => updateAbility(ability, Math.min(15, character.abilities[ability] + 1))}
+                        disabled={character.abilities[ability] >= 15 || usedAbilityPoints >= MAX_ABILITY_POINTS}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className={styles.abilityModifier}>
+                      Modifier: {formatModifier(getModifier(character.abilities[ability]))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className={styles.formActions}>
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className={styles.buttonSecondary}
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className={styles.buttonPrimary}
+                >
+                  Next: Skills & Languages
+                </button>
+              </div>
             </div>
-          </div>
-        );
+          );
       case 3:
         return (
           <div className="creator-step">
@@ -265,7 +318,7 @@ export default function CharacterCreator() {
                 <button className="btn primary-btn">Save Character</button>
                 <button className="btn secondary-btn" onClick={() => setStep(1)}>Create Another Character</button>
               </div>
-            </div>
+            </div>  
           </div>
         );
       default:

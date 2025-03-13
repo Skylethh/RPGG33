@@ -98,3 +98,166 @@
   background: #c82333;
   border-color: #bd2130;
 }
+
+/* Irksal bonusları göstermek için yeni stiller */
+
+.racialBonus {
+  font-size: 0.9rem;
+  color: #f0a742;
+  margin-left: 2px;
+}
+
+.totalScore {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  border-top: 1px solid rgba(240, 167, 66, 0.3);
+  padding-top: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContent {
+  background: rgba(25, 25, 35, 0.95);
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(240, 167, 66, 0.2);
+  border: 1px solid rgba(240, 167, 66, 0.2);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.2);
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 2rem;
+  background: linear-gradient(45deg, #f0f0f0, #f8d12f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Cinzel', serif;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #aaa;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.characterSummary {
+  padding: 2rem;
+}
+
+.characterType {
+  font-size: 1.2rem;
+  color: #f0a742;
+  margin-bottom: 1.5rem;
+}
+
+.abilitiesSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.abilitySummaryItem {
+  background: rgba(30, 30, 50, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.abilityName {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.abilityScore {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.racialBonus {
+  font-size: 0.9rem;
+  color: #f0a742;
+  margin-left: 2px;
+}
+
+.totalScore {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffffff;
+  border-top: 1px solid rgba(240, 167, 66, 0.3);
+  padding-top: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.abilityMod {
+  color: #aaa;
+}
+
+.traitsList,
+.abilitiesList,
+.languagesList {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.abilitiesList li {
+  margin-bottom: 0.5rem;
+}
+
+.abilitiesList strong {
+  color: #f0a742;
+}
+
+.backgroundText {
+  color: #ccc;
+  font-style: italic;
+  line-height: 1.6;
+}
