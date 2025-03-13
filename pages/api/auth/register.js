@@ -1,46 +1,68 @@
-import { hash } from "bcryptjs";
-import clientPromise from "../../../lib/mongodb";
+import dbConnect from '../../../lib/dbConnect';
+import User from '../../../models/user';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { name, email, password } = req.body;
-
-  if (!name || !email || !password) {
-    return res.status(422).json({ message: "Tüm alanlar zorunludur" });
-  }
-
-  if (password.length < 6) {
-    return res.status(422).json({ message: "Şifre en az 6 karakter olmalıdır" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
-    const client = await clientPromise;
-    const db = client.db();
+    await dbConnect();
 
-    // Kullanıcının zaten var olup olmadığını kontrol et
-    const existingUser = await db.collection("users").findOne({ email });
-    if (existingUser) {
-      return res.status(422).json({ message: "Bu e-posta adresi zaten kullanımda" });
+    const { name, email, password } = req.body;
+
+    // Validation
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Lütfen tüm gerekli alanları doldurun' });
     }
 
-    // Şifreyi hashle
-    const hashedPassword = await hash(password, 12);
+    if (password.length < 8) {
+      return res.status(400).json({ message: 'Şifre en az 8 karakter olmalıdır' });
+    }
 
-    // Yeni kullanıcı oluştur
-    const result = await db.collection("users").insertOne({
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    
+    if (existingUser) {
+      return res.status(409).json({ message: 'Bu e-posta adresi zaten kullanılıyor' });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const user = await User.create({
       name,
       email,
       password: hashedPassword,
       createdAt: new Date(),
-      emailVerified: null
     });
 
-    res.status(201).json({ message: "Kullanıcı oluşturuldu", userId: result.insertedId });
+    // Remove password from response
+    const userResponse = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt
+    };
+
+    return res.status(201).json({ message: 'Kullanıcı başarıyla oluşturuldu', user: userResponse });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Sunucu hatası. Lütfen daha sonra tekrar deneyin" });
+    console.error('Kayıt hatası:', error);
+    
+    // Check for MongoDB specific errors
+    if (error.code === 11000) {
+      return res.status(409).json({ message: 'Bu e-posta adresi zaten kullanılıyor' });
+    }
+    
+    // Database permission error
+    if (error.message && error.message.includes('not allowed to do action')) {
+      return res.status(500).json({ 
+        message: 'Veritabanı erişim hatası. Lütfen sistem yöneticisiyle iletişime geçin.' 
+      });
+    }
+    
+    return res.status(500).json({ message: 'Sunucu hatası' });
   }
 }
