@@ -7,6 +7,20 @@ export default function ClassesSection({ classes }) {
     setExpandedClass(expandedClass === classId ? null : classId);
   };
 
+  // Function to map class ID to fixed health value
+  const getFixedHealthValue = (classId) => {
+    const healthByClass = {
+      'wizard': 6,
+      'bard': 8,
+      'druid': 8,
+      'paladin': 10,
+      'rogue': 8,
+      'fighter': 10,
+      'barbarian': 12
+    };
+    return healthByClass[classId] || 8; // Default to 8 if class not found
+  };
+
   return (
     <div className="rulebook-section classes-section">
       <h2>Classes</h2>
@@ -28,10 +42,10 @@ export default function ClassesSection({ classes }) {
             <div className="class-details">
               <p className="description">{characterClass.description}</p>
               
-              <div className="class-detail-grid">
+              <div className="class-detail-grid centered-details">
                 <div className="detail-item">
-                  <span className="detail-label">Hit Die:</span> 
-                  <span className="detail-value">{characterClass.hitDie}</span>
+                  <span className="detail-label">Health Points:</span> 
+                  <span className="detail-value">{getFixedHealthValue(characterClass.id)} + Constitution Modifier</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Primary Ability:</span> 
@@ -45,22 +59,12 @@ export default function ClassesSection({ classes }) {
                 </div>
               </div>
               
-              <h4>Starting Skills</h4>
-              <p>Choose {characterClass.skillChoices.count} from: {characterClass.skillChoices.choices.map(skill => skill.charAt(0).toUpperCase() + skill.slice(1)).join(', ')}.</p>
-              
               <h4>Features</h4>
               <ul className="features-list">
                 {characterClass.features.map(feature => (
                   <li key={feature.name}>
                     <strong>{feature.name}</strong> (Level {feature.level}): {feature.description}
                   </li>
-                ))}
-              </ul>
-              
-              <h4>Starting Equipment</h4>
-              <ul className="equipment-list">
-                {characterClass.equipment.map((item, index) => (
-                  <li key={index}>{item}</li>
                 ))}
               </ul>
               

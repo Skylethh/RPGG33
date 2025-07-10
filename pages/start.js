@@ -17,7 +17,7 @@ export default function Start() {
   }, []);
   
   return (
-    <Layout title="Begin Your Quest | DragonQuestAI">
+    <Layout title="Begin Your Quest | SAGAI">
       <div className={styles.container}>
         <div className={styles.heroSection}>
           <div className={styles.heroContent}>

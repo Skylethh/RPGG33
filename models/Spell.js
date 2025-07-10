@@ -39,4 +39,4 @@ class Spell {
   }
 }
 
-export default Spell;
+module.exports = Spell;

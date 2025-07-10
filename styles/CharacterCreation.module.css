@@ -687,83 +687,6 @@
   color: #f0a742;
   font-weight: 600;
 }
-/* Başlık stillerini daha belirgin hale getirme */
-
-
-/* Ability kartlarını iyileştirme */
-
-
-
-
-.abilitySummaryItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  border-color: rgba(240, 167, 66, 0.4);
-}
-
-
-
-
-
-
-
-.abilityDetails {
-  font-size: 0.9rem;
-  color: #bbb;
-  margin: 0.2rem 0;
-}
-
-.racialBonus {
-  font-size: 0.9rem;
-  color: #f0a742;
-  margin-left: 3px;
-  font-weight: 600;
-}
-
-.abilityMod {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: rgba(20, 20, 35, 0.5);
-  border-radius: 4px;
-  padding: 0.4rem 0.8rem;
-  margin-top: 0.5rem;
-  border-top: 1px solid rgba(240, 167, 66, 0.2);
-}
-
-.modifierLabel {
-  font-size: 0.7rem;
-  color: #aaa;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.modifierValue {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #f0a742;
-}
-
-/* Liste stillerini iyileştirme */
-.traitsList,
-.abilitiesList,
-.languagesList {
-  list-style-type: disc;
-  padding-left: 1.8rem;
-  margin-bottom: 2rem;
-  color: #e0e0e0;
-  line-height: 1.6;
-}
-
-.abilitiesList li,
-.languagesList li {
-  margin-bottom: 0.8rem;
-}
-
-.abilitiesList strong {
-  color: #f0a742;
-  font-weight: 600;
-}
 /* Başlık stillerini daha belirgin ve turuncu yapma */
 
 
@@ -947,3 +870,876 @@
   color: #ff9800;
   font-weight: 600;
 }
+/* Spell Selection Styles */
+.spellSelectionContainer {
+  margin-bottom: 2rem;
+}
+
+.cantripSection,
+.spellSelectionSection {
+  background: rgba(30, 30, 45, 0.7);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+
+
+
+
+.spellSelectionSection .spellCard {
+  cursor: pointer;
+}
+
+.spellSelectionSection .spellCard:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.spellCard.selected {
+  background: rgba(var(--accent-color-rgb), 0.2);
+  border-color: var(--accent-color);
+}
+
+.spellSchool {
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.spellDescription {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.spellSelectionSummary {
+  margin-top: 1rem;
+  text-align: right;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+/* Spell Selection Styles */
+.spellcasterNote {
+  background-color: rgba(240, 167, 66, 0.1);
+  border-left: 3px solid #f0a742;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.spellsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+
+
+
+
+
+
+.spellCard.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 24px;
+  height: 24px;
+  background: #f0a742;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a2e;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.autoSpell {
+  border: 1px dashed rgba(240, 167, 66, 0.5) !important;
+}
+
+.autoSpell::before {
+  content: 'Auto';
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background: rgba(240, 167, 66, 0.8);
+  color: #1a1a2e;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.spellHeader {
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+
+.spellName {
+  font-size: 1.2rem;
+  color: #f0a742;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.spellSchool {
+  font-size: 0.85rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+.ritualTag, .concentrationTag {
+  color: #f0a742;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.spellMeta {
+  background: rgba(20, 20, 35, 0.6);
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.spellMetaItem {
+  margin-bottom: 0.4rem;
+}
+
+.spellMetaItem:last-child {
+  margin-bottom: 0;
+}
+
+.metaLabel {
+  color: #aaa;
+  margin-right: 0.4rem;
+}
+
+.spellDescription {
+  color: #ddd;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.spellSelectionCounter {
+  background: rgba(20, 20, 35, 0.7);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(240, 167, 66, 0.15);
+  font-weight: 500;
+  color: #ccc;
+}
+
+.spellCountValue {
+  color: #f0a742;
+  font-weight: 600;
+}
+
+.autoSpellNote {
+  font-style: italic;
+  color: #f0a742;
+}
+
+.spellsSubheader {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin: 1.5rem 0 0.8rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.2);
+  padding-bottom: 0.4rem;
+}
+
+.spellsList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.spellItem {
+  background: rgba(30, 30, 50, 0.5);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid rgba(240, 167, 66, 0.4);
+}
+
+.autoSpellIcon {
+  font-size: 0.9rem;
+  vertical-align: super;
+  margin-left: 5px;
+  color: #f0a742;
+}
+
+.selectionIndicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 30px 30px 0;
+  border-color: transparent transparent transparent transparent;
+  transition: border-color 0.2s ease;
+}
+
+.selected .selectionIndicator {
+  border-color: transparent #f0a742 transparent transparent;
+}
+
+/* Add these styles to the end of your CSS file */
+
+.spellsSection {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1.5rem;
+}
+
+.spellList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.spellCard {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.spellCard:hover {
+  border-color: #9c27b0;
+  box-shadow: 0 3px 8px rgba(156, 39, 176, 0.2);
+}
+
+.spellCard.selected {
+  background-color: rgba(156, 39, 176, 0.08);
+  border-color: #9c27b0;
+  box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+}
+
+.spellHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.spellHeader h4 {
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.defaultTag {
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.ritualTag {
+  background-color: #ff9800;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.spellDetails {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.spellDetails p {
+  margin: 2px 0;
+}
+
+.concentration {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.spellDescription {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.spellsSubheader {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #673ab7;
+}
+
+.spellsList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.spellItem {
+  padding: 0.5rem 0;
+  border-bottom: 1px dotted #ddd;
+}
+
+.spellName {
+  font-weight: 600;
+  display: block;
+}
+
+.spellMeta {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.autoSpellIcon {
+  color: #ffc107;
+  margin-left: 5px;
+}
+/* Spell selection specific styles */
+.spellsSection {
+  background: rgba(30, 30, 45, 0.7);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(240, 167, 66, 0.2);
+}
+
+.spellsSection h3 {
+  color: #f0a742;
+  margin-bottom: 0.6rem;
+  font-size: 1.3rem;
+}
+
+.spellList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.spellCard {
+  background: rgba(25, 25, 40, 0.7);
+  border-radius: 8px;
+  padding: 1.2rem;
+  border: 1px solid rgba(240, 167, 66, 0.2);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.spellCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(240, 167, 66, 0.4);
+}
+
+.spellCard.selected {
+  background: rgba(240, 167, 66, 0.1);
+  border-color: #f0a742;
+}
+
+.spellCard.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f0a742;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.spellHeader {
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.spellHeader h4 {
+  color: #f0a742;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.ritualTag {
+  background: rgba(240, 167, 66, 0.2);
+  color: #f0a742;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.spellDetails {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.spellDetails p {
+  margin: 0.2rem 0;
+}
+
+.concentration {
+  color: #f0a742;
+  font-style: italic;
+}
+
+.spellDescription {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.5;
+  border-top: 1px solid rgba(240, 167, 66, 0.1);
+  padding-top: 0.8rem;
+}
+
+.spellSelectionSummary {
+  text-align: right;
+  color: #f0a742;
+  font-weight: 600;
+  margin: 0.5rem 0 1rem;
+}
+.spellList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.spellCard {
+  background: rgba(25, 25, 40, 0.7);
+  border-radius: 8px;
+  padding: 1.2rem;
+  border: 1px solid rgba(240, 167, 66, 0.2);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.spellCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(240, 167, 66, 0.4);
+}
+
+.spellCard.selected {
+  background: rgba(240, 167, 66, 0.1);
+  border-color: #f0a742;
+}
+
+.spellCard.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f0a742;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.spellHeader {
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spellHeader h4 {
+  color: #f0a742;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.ritualTag, .autoSelectedTag {
+  background: rgba(240, 167, 66, 0.2);
+  color: #f0a742;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spellDetails {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  flex-grow: 1;
+}
+
+.spellDetails p {
+  margin: 0.2rem 0;
+}
+
+.concentration {
+  color: #f0a742;
+  font-style: italic;
+}
+
+.spellDescription {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.5;
+  border-top: 1px solid rgba(240, 167, 66, 0.1);
+  padding-top: 0.8rem;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.spellSelectionSummary {
+  text-align: right;
+  color: #f0a742;
+  font-weight: 600;
+  margin: 0.5rem 0 1rem;
+}
+
+/* Özet ekranında büyü listeleme */
+.spellsSubheader {
+  color: #ddd;
+  font-size: 1.1rem;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+}
+
+.spellsList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.spellItem {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 4px;
+}
+
+.spellName {
+  color: #f0a742;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.spellMeta {
+  font-size: 0.9rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Büyüler responsiveness */
+@media (max-width: 768px) {
+  .spellList {
+    grid-template-columns: 1fr;
+  }
+  
+  .autoSelectedTag, .ritualTag {
+    font-size: 0.6rem;
+    padding: 0.1rem 0.3rem;
+  }
+}
+
+/* Equipment Selection Styles */
+.equipmentSection {
+  margin-bottom: 2rem;
+}
+
+.equipmentSection h3 {
+  font-size: 1.3rem;
+  color: #f0a742;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.itemCard {
+  background: rgba(30, 30, 50, 0.6);
+  border-radius: 8px;
+  padding: 1.2rem;
+  border: 1px solid rgba(240, 167, 66, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.itemCard:hover {
+  background: rgba(40, 40, 60, 0.7);
+  border-color: rgba(240, 167, 66, 0.3);
+  transform: translateY(-2px);
+}
+
+.itemCard.selected {
+  background: rgba(50, 50, 70, 0.8);
+  border-color: #f0a742;
+  box-shadow: 0 0 10px rgba(240, 167, 66, 0.3);
+}
+
+.itemCard.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f0a742;
+  color: #1a1a2e;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.itemCard h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  color: #fff;
+}
+
+.itemType {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.itemDetails {
+  background: rgba(20, 20, 35, 0.5);
+  border-radius: 6px;
+  padding: 0.8rem;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.detailItem:last-child {
+  margin-bottom: 0;
+}
+
+.detailLabel {
+  color: #f0a742;
+  font-weight: 500;
+}
+
+.detailValue {
+  color: #e0e0e0;
+}
+
+/* Equipment Summary Styles */
+.equipmentSummary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.weaponsSummary,
+.armorSummary {
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.weaponsSummary h4,
+.armorSummary h4 {
+  color: #f0a742;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.summarySection {
+  margin-bottom: 2rem;
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.summarySection h3 {
+  color: #f0a742;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.summaryLabel {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.summaryValue {
+  color: #fff;
+  font-weight: 600;
+}
+
+.summaryList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.summaryList li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.6rem;
+  color: #ddd;
+}
+
+.summaryList li:before {
+  content: "•";
+  color: #f0a742;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.emptyMessage {
+  color: #888;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.spellsSummary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.cantripsSummary,
+.level1SpellsSummary {
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.cantripsSummary h4,
+.level1SpellsSummary h4 {
+  color: #f0a742;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .itemsGrid,
+  .summaryGrid,
+  .equipmentSummary,
+  .spellsSummary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.abilityDetails {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin: 0.2rem 0;
+}
+
+.racialBonus {
+  font-size: 0.9rem;
+  color: #f0a742;
+  margin-left: 3px;
+  font-weight: 600;
+}
+
+.abilityMod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(20, 20, 35, 0.5);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(240, 167, 66, 0.2);
+}
+
+.modifierLabel {
+  font-size: 0.7rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modifierValue {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #f0a742;
+}
+
+/* Liste stillerini iyileştirme */
+.traitsList,
+.abilitiesList,
+.languagesList {
+  list-style-type: disc;
+  padding-left: 1.8rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+.abilitiesList li,
+.languagesList li {
+  margin-bottom: 0.8rem;
+}
+
+.abilitiesList strong {
+  color: #f0a742;
+  font-weight: 600;
+}
+
+/* Ability kartlarını iyileştirme */
+.abilitySummaryItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(240, 167, 66, 0.4);
+}
+
+.spellCard.defaultSpell {
+  border-color: #4caf50;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  cursor: default;
+} 

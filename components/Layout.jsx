@@ -2,8 +2,17 @@ import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-export default function Layout({ children, title = 'DragonQuest AI - Interactive D&D Experience' }) {
+export default function Layout({ children, title = 'SAGAI - Interactive D&D Experience' }) {
+  const router = useRouter();
+  
+  // Header'ın görünmesi gereken sayfalar
+  const showHeaderPaths = ['/', '/rules', '/existing-characters', '/profile'];
+  const shouldShowHeader = showHeaderPaths.some(path => 
+    router.pathname === path || router.pathname.startsWith(path + '/')
+  );
+  
   useEffect(() => {
     // Enhanced background parallax effect
     const handleScroll = () => {
@@ -24,22 +33,17 @@ export default function Layout({ children, title = 'DragonQuest AI - Interactive
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content="AI-powered D&D adventure experience" />
+        <meta name="description" content="SAGAI - AI-powered D&D adventure experience" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Spectral:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fontları doğrudan import edelim - _document.js'te style tanımlanmalı */}
       </Head>
       
       <div className="bg-container">
         <div className="moving-bg"></div>
       </div>
       
-      <Header />
+      {shouldShowHeader && <Header />}
       
       <main>{children}</main>
       

@@ -19,4 +19,4 @@ class Race {
     }
   }
   
-  export default Race;
+  module.exports = Race;

@@ -1,0 +1,178 @@
+/* General Container and Title */
+.container {
+  width: 100%;
+  min-height: calc(100vh - 80px); /* Adjust 80px based on your header height */
+  padding: 4rem 2rem;
+  background: #0c0c0c url('/images/dragon-bg.svg') no-repeat center center / cover;
+  color: #e0e0e0;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profileCard {
+  background-color: rgba(26, 26, 26, 0.8);
+  border: 1px solid #444;
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-top: 0;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #555;
+}
+
+/* User Info Section */
+.userInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.editButton {
+    background: none;
+    border: none;
+    color: #00bcd4;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.usernameForm {
+    display: flex;
+    gap: 10px;
+}
+
+.usernameInput {
+    flex-grow: 1;
+}
+
+.smallButton {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+
+/* Form Elements */
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.inputGroup input::placeholder {
+    color: #888;
+}
+
+/* Buttons */
+.button {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.updateButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.upgradeButton {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.upgradeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.actionsCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: 1px solid #ff4d4d;
+  color: #ff4d4d;
+}
+
+.logoutButton:hover {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.deleteButton {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.deleteButton:hover {
+    background-color: #e02d2d;
+}
+
+.planFree {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+/* Messages */
+.message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.error {
+    background-color: #dc3545;
+    color: white;
+}

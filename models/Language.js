@@ -18,4 +18,4 @@ class Language {
   }
 }
 
-export default Language;
+module.exports = Language;

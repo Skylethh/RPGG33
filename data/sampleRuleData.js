@@ -1,9 +1,10 @@
 import Race from '../models/Race';
 import Class from '../models/Class';
 import Language from '../models/Language';
-import { Item, Weapon, Armor, WEAPONS } from '../models/Item';
+import { Item, Weapon, Armor } from '../models/Item';
 import Spell from '../models/Spell';
 import RuleBook from '../models/RuleBook';
+
 
 // Initialize rulebook with sample data
 export function initializeRuleBook() {
@@ -57,7 +58,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "wizard",
     "Wizard",
-    "Masters of arcane magic, scholars who unlock the mysteries of the multiverse through study and practice.",
+    "Masters of arcane magic, scholars who unlock the mysteries of the multiverse through study and practice. With a hit die of d6, wizards have the lowest health pool but compensate with powerful spells.",
     "intelligence",
     "d6",
     ["intelligence", "wisdom"],
@@ -74,7 +75,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "bard",
     "Bard",
-    "Masters of song, speech, and the magic they contain, using verbal performances to weave enchantments.",
+    "Masters of song, speech, and the magic they contain, using verbal performances to weave enchantments. With a hit die of d8, bards have moderate health and versatile abilities.",
     "charisma",
     "d8",
     ["dexterity", "charisma"],
@@ -91,7 +92,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "druid",
     "Druid",
-    "Guardians of nature who draw upon primal magic to protect the wild and shape-shift into creatures.",
+    "Guardians of nature who draw upon primal magic to protect the wild and shape-shift into creatures. With a hit die of d8, druids have moderate health and balance offense with defense.",
     "wisdom",
     "d8",
     ["intelligence", "wisdom"],
@@ -108,7 +109,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "paladin",
     "Paladin",
-    "Holy warriors bound by sacred oaths to uphold justice and righteousness, blessed with divine magic.",
+    "Holy warriors bound by sacred oaths to uphold justice and righteousness, blessed with divine magic. With a hit die of d10, paladins have high health and excel in frontline combat.",
     "strength",
     "d10",
     ["wisdom", "charisma"],
@@ -118,14 +119,14 @@ rulebook.addRace(new Race(
       { name: "Lay on Hands", level: 1, description: "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5." }
     ],
     ["martial weapon and shield OR two martial weapons", "javelins OR any simple melee weapon", "priest's pack OR explorer's pack", "chain mail", "holy symbol"],
-    { ability: "charisma", cantripsKnown: 0, prepared: true, level: 2 }
+    { ability: "charisma", cantripsKnown: 2, prepared: true, level: 1 } // cantrip kullanabilir hale getirdik
   ));
   
   // 5. ROGUE
   rulebook.addClass(new Class(
     "rogue",
     "Rogue",
-    "Masters of stealth, precision, and skill, using cunning to overcome obstacles and strike from the shadows.",
+    "Masters of stealth, precision, and skill, using cunning to overcome obstacles and strike from the shadows. With a hit die of d8, rogues have moderate health but excel at avoiding damage.",
     "dexterity",
     "d8",
     ["dexterity", "intelligence"],
@@ -143,7 +144,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "fighter",
     "Fighter",
-    "Masters of martial combat, skilled with a variety of weapons and armor to face any battlefield challenge.",
+    "Masters of martial combat, skilled with a variety of weapons and armor to face any battlefield challenge. With a hit die of d10, fighters have high health and are durable frontline combatants.",
     "strength",
     "d10",
     ["strength", "constitution"],
@@ -160,7 +161,7 @@ rulebook.addRace(new Race(
   rulebook.addClass(new Class(
     "barbarian",
     "Barbarian",
-    "Fierce warriors driven by fury and primal instinct, capable of entering powerful rage states in battle.",
+    "Fierce warriors driven by fury and primal instinct, capable of entering powerful rage states in battle. With a hit die of d12, barbarians have the highest health pool of all classes, making them exceptionally durable.",
     "strength",
     "d12",
     ["strength", "constitution"],
@@ -211,14 +212,44 @@ rulebook.addRace(new Race(
     "Longsword",
     "A versatile slashing weapon favored by knights and warriors.",
     "common",
-    15, // gold pieces
+    25, // Gold pieces - equal to heavy axe and longbow
     3, // pounds
     ["versatile"], // properties
     null, // requirements
     false, // attunement
     "slashing", // damage type
-    "1d8", // damage amount
+    "1d8", // damage amount - equal to heavy axe
     null // range
+  ));
+  
+  rulebook.addItem(new Weapon(
+    "heavy-axe",
+    "Heavy Battle Axe",
+    "A large, two-handed axe capable of dealing devastating blows.",
+    "common",
+    25, // Gold pieces - equal to longsword and longbow
+    5, // pounds
+    ["heavy", "two-handed"], // properties
+    null, // requirements
+    false, // attunement
+    "slashing", // damage type
+    "1d8", // damage amount - equal to longsword
+    null // range
+  ));
+  
+  rulebook.addItem(new Weapon(
+    "long-bow",
+    "Long Bow",
+    "A tall bow that can shoot arrows at great distances.",
+    "common",
+    25, // Gold pieces - equal to longsword and heavy axe
+    2, // pounds
+    ["ammunition", "heavy", "two-handed"], // properties
+    null, // requirements
+    false, // attunement
+    "piercing", // damage type
+    "1d6", // damage amount - slightly less than longsword/axe
+    { normal: 150, long: 600 } // range
   ));
   
   rulebook.addItem(new Weapon(
@@ -226,48 +257,58 @@ rulebook.addRace(new Race(
     "Shortbow",
     "A small, lightweight bow used for hunting and warfare.",
     "common",
-    25, // gold pieces
+    10, // Gold pieces - equal to dagger
     2, // pounds
     ["ammunition", "two-handed"], // properties
     null, // requirements
     false, // attunement
     "piercing", // damage type
-    "1d6", // damage amount
+    "1d3", // damage amount - less than dagger
     { normal: 80, long: 320 } // range
   ));
   
+  rulebook.addItem(new Weapon(
+    "dagger",
+    "Dagger",
+    "A small knife with a sharp point, used as a weapon.",
+    "common",
+    10, // Gold pieces - equal to shortbow
+    1, // pounds
+    ["finesse", "light", "thrown"], // properties
+    null, // requirements
+    false, // attunement
+    "piercing", // damage type
+    "1d4", // damage amount - slightly more than shortbow
+    { normal: 20, long: 60 } // range
+  ));
+
   // Armor
   rulebook.addItem(new Armor(
     "leather-armor",
     "Leather Armor",
-    "A sturdy but flexible armor made from treated animal hides.",
+    "A sturdy but flexible armor made from treated animal hides. Offers excellent mobility and stealth capabilities while providing moderate protection.",
     "common",
-    10, // gold pieces
-    10, // pounds
-    [], // properties
-    null, // requirements
+    45, // gold pieces - similar to chain mail
+    10, // pounds - light weight (advantage)
+    ["flexible", "silent"], // properties - added advantages
+    null, // requirements - no strength requirement (advantage)
     false, // attunement
-    11, // armor class (+ dex modifier)
-    false // stealth disadvantage
+    12, // armor class (+ dex modifier) - allows adding dexterity (advantage)
+    false // stealth disadvantage - no stealth disadvantage (advantage)
   ));
-  
-  // Add predefined weapons
-  rulebook.addItem(WEAPONS.DAGGER);
-  rulebook.addItem(WEAPONS.HEAVY_AXE);
-  rulebook.addItem(WEAPONS.LONG_BOW);
   
   rulebook.addItem(new Armor(
     "chain-mail",
     "Chain Mail",
-    "A suit of interlocking metal rings covering the torso, arms, and legs.",
+    "A suit of interlocking metal rings covering the torso, arms, and legs. Provides superior protection against slashing attacks but limits mobility and makes noise when moving.",
     "common",
-    75, // gold pieces
-    55, // pounds
-    [], // properties
-    { strength: 13 }, // requirements
+    50, // gold pieces - similar to leather armor
+    40, // pounds - heavy weight (disadvantage)
+    ["reinforced", "slashing-resistant"], // properties - added advantages
+    { strength: 13 }, // requirements - strength requirement (disadvantage)
     false, // attunement
-    16, // armor class (no dex modifier)
-    true // stealth disadvantage
+    16, // armor class (no dex modifier) - higher base AC (advantage) but no dex bonus
+    true // stealth disadvantage - disadvantage on stealth (disadvantage)
   ));
   
   // Regular items
@@ -284,22 +325,105 @@ rulebook.addRace(new Race(
     false // attunement
   ));
   
+  
   // Add sample spells with updated class lists
+   // BÜYÜ BÖLÜMÜ - YENİDEN DENGELENDİ
+  
+  // CANTRIP BÜYÜLERİ (Level 0)
+    // SPELLS SECTION - REBALANCED
+  
+  // CANTRIPS (Level 0)
   rulebook.addSpell(new Spell(
-    "fireball",
-    "Fireball",
-    "A bright streak flashes from your finger to a point you choose within range and then blossoms with a low roar into an explosion of flame.",
-    3, // level
-    "evocation", // school
+    "mage-hand",
+    "Mage Hand",
+    "A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration or until you dismiss it. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.",
+    0, // level (cantrip)
+    "conjuration", // school
     "1 action", // casting time
-    "150 feet", // range
-    { verbal: true, somatic: true, material: "A tiny ball of bat guano and sulfur" }, // components
-    "Instantaneous", // duration
-    ["Wizard"], // Updated classes
+    "30 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "1 minute", // duration
+    ["Wizard", "Bard"], // classes
     false, // ritual
     false // concentration
   ));
   
+  rulebook.addSpell(new Spell(
+    "fire-bolt",
+    "Fire Bolt",
+    "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack. On a hit, the target takes 1d10 fire damage.",
+    0, // level
+    "evocation", // school
+    "1 action", // casting time
+    "120 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Wizard"], // classes - Wizard only for higher damage
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "vicious-mockery",
+    "Vicious Mockery",
+    "You unleash a string of insults laced with subtle enchantments. If the target can hear you, it must make a Wisdom saving throw or take 1d4 psychic damage and have disadvantage on its next attack roll.",
+    0, // level (cantrip)
+    "enchantment", // school
+    "1 action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: false, material: null }, // components
+    "Instantaneous", // duration
+    ["Bard"], // classes
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "druidcraft",
+    "Druidcraft",
+    "You create a tiny, harmless sensory effect that predicts the weather, makes a flower bloom, creates a sensory effect, or snuffs out a small flame.",
+    0, // level (cantrip)
+    "transmutation", // school
+    "1 action", // casting time
+    "30 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Druid"], // classes
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "sacred-flame",
+    "Sacred Flame",
+    "Flame-like radiance descends on a creature. The target must make a Dexterity saving throw or take 1d6 radiant damage.",
+    0, // level (cantrip)
+    "evocation", // school
+    "1 action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Paladin"], // classes - Reduced damage for Paladin
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "guidance",
+    "Guidance",
+    "You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice.",
+    0, // level (cantrip)
+    "divination", // school
+    "1 action", // casting time
+    "Touch", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Concentration, up to 1 minute", // duration
+    ["Druid", "Paladin"], // classes
+    false, // ritual
+    true // concentration
+  ));
+  
+  // LEVEL 1 SPELLS
   rulebook.addSpell(new Spell(
     "cure-wounds",
     "Cure Wounds",
@@ -310,27 +434,26 @@ rulebook.addRace(new Race(
     "Touch", // range
     { verbal: true, somatic: true, material: null }, // components
     "Instantaneous", // duration
-    ["Bard", "Druid", "Paladin"], // Updated classes
-    false, // ritual
-    false // concentration
-  ));
-
-  rulebook.addSpell(new Spell(
-    "mage-hand",
-    "Mage Hand",
-    "A spectral, floating hand appears at a point you choose within range.",
-    0, // level (cantrip)
-    "conjuration", // school
-    "1 action", // casting time
-    "30 feet", // range
-    { verbal: true, somatic: true, material: null }, // components
-    "1 minute", // duration
-    ["Bard", "Wizard"], // Updated classes
+    ["Druid", "Paladin", "Bard"], // classes
     false, // ritual
     false // concentration
   ));
   
-  // Add more spells with updated class lists
+  rulebook.addSpell(new Spell(
+    "bless",
+    "Bless",
+    "You bless up to three creatures of your choice. Whenever a target makes an attack roll or a saving throw before the spell ends, it can roll a d4 and add the number rolled to the attack roll or saving throw.",
+    1, // level
+    "enchantment", // school
+    "1 action", // casting time
+    "30 feet", // range
+    { verbal: true, somatic: true, material: "A sprinkling of holy water" }, // components
+    "Concentration, up to 1 minute", // duration
+    ["Paladin"], // classes
+    false, // ritual
+    true // concentration
+  ));
+  
   rulebook.addSpell(new Spell(
     "healing-word",
     "Healing Word",
@@ -347,24 +470,9 @@ rulebook.addRace(new Race(
   ));
   
   rulebook.addSpell(new Spell(
-    "hunters-mark",
-    "Hunter's Mark",
-    "You choose a creature you can see within range and mystically mark it as your quarry.",
-    1, // level
-    "divination", // school
-    "1 bonus action", // casting time
-    "90 feet", // range
-    { verbal: true, somatic: false, material: null }, // components
-    "Concentration, up to 1 hour", // duration
-    ["Paladin"], // classes
-    false, // ritual
-    true // concentration
-  ));
-  
-  rulebook.addSpell(new Spell(
     "thunderwave",
     "Thunderwave",
-    "A wave of thunderous force sweeps out from you, affecting creatures and objects in its path.",
+    "A wave of thunderous force sweeps out from you. Each creature in a 15-foot cube must make a Constitution saving throw or take 2d8 thunder damage and be pushed 10 feet away.",
     1, // level
     "evocation", // school
     "1 action", // casting time
@@ -377,19 +485,232 @@ rulebook.addRace(new Race(
   ));
   
   rulebook.addSpell(new Spell(
-    "moonbeam",
-    "Moonbeam",
-    "A silvery beam of pale light shines down in a 5-foot-radius, 40-foot-high cylinder centered on a point within range.",
-    2, // level
+    "magic-missile",
+    "Magic Missile",
+    "You create three glowing darts of magical force. Each dart hits a creature of your choice, dealing 1d4+1 force damage.",
+    1, // level
     "evocation", // school
     "1 action", // casting time
     "120 feet", // range
-    { verbal: true, somatic: true, material: "Several seeds of any moonseed plant and a piece of opalescent feldspar" }, // components
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Wizard"], // classes - Wizard only for guaranteed damage
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "hunters-mark",
+    "Hunter's Mark",
+    "You choose a creature and mystically mark it as your quarry. You deal an extra 1d4 damage to the target with weapon attacks.",
+    1, // level
+    "divination", // school
+    "1 bonus action", // casting time
+    "90 feet", // range
+    { verbal: true, somatic: false, material: null }, // components
+    "Concentration, up to 1 hour", // duration
+    ["Paladin"], // classes - Reduced damage for Paladin
+    false, // ritual
+    true // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "charm-person",
+    "Charm Person",
+    "You attempt to charm a humanoid. If it fails a Wisdom saving throw, it is charmed by you until the spell ends.",
+    1, // level
+    "enchantment", // school
+    "1 action", // casting time
+    "30 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "1 hour", // duration
+    ["Bard", "Wizard"], // classes
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "entangle",
+    "Entangle",
+    "Grasping weeds and vines sprout from the ground. Creatures in a 20-foot square must succeed on a Strength saving throw or be restrained.",
+    1, // level
+    "conjuration", // school
+    "1 action", // casting time
+    "90 feet", // range
+    { verbal: true, somatic: true, material: "A pinch of seeds" }, // components
     "Concentration, up to 1 minute", // duration
     ["Druid"], // classes
     false, // ritual
     true // concentration
   ));
+  
+  rulebook.addSpell(new Spell(
+    "shield-of-faith",
+    "Shield of Faith",
+    "A shimmering field appears and surrounds a creature of your choice, granting it a +1 bonus to AC.",
+    1, // level
+    "abjuration", // school
+    "1 bonus action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: true, material: "A small parchment with holy text" }, // components
+    "Concentration, up to 10 minutes", // duration
+    ["Paladin"], // classes - Reduced bonus for Paladin
+    false, // ritual
+    true // concentration
+  ));
+  
+  // LEVEL 2 SPELLS
+  rulebook.addSpell(new Spell(
+    "moonbeam",
+    "Moonbeam",
+    "A silvery beam of pale light shines down in a 5-foot-radius, 40-foot-high cylinder. Each creature that enters the spell's area takes 2d8 radiant damage.",
+    2, // level
+    "evocation", // school
+    "1 action", // casting time
+    "120 feet", // range
+    { verbal: true, somatic: true, material: "Several seeds of a moonseed plant and a piece of opalescent feldspar" }, // components
+    "Concentration, up to 1 minute", // duration
+    ["Druid"], // classes - Druid only for balance
+    false, // ritual
+    true // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "scorching-ray",
+    "Scorching Ray",
+    "You create three rays of fire and hurl them at targets within range. Make a ranged spell attack. Each ray deals 2d6 fire damage.",
+    2, // level
+    "evocation", // school
+    "1 action", // casting time
+    "120 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Wizard"], // classes - Wizard only for higher damage potential
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "hold-person",
+    "Hold Person",
+    "You attempt to paralyze a humanoid. The target must succeed on a Wisdom saving throw or be paralyzed for the duration.",
+    2, // level
+    "enchantment", // school
+    "1 action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: true, material: "A small, straight piece of iron" }, // components
+    "Concentration, up to 1 minute", // duration
+    ["Bard", "Wizard"], // classes - Removed Paladin for balance
+    false, // ritual
+    true // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "lesser-restoration",
+    "Lesser Restoration",
+    "You touch a creature and can end one disease or condition afflicting it: blinded, deafened, paralyzed, or poisoned.",
+    2, // level
+    "abjuration", // school
+    "1 action", // casting time
+    "Touch", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Instantaneous", // duration
+    ["Bard", "Druid", "Paladin"], // classes
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "spiritual-weapon",
+    "Spiritual Weapon",
+    "You create a floating, spectral weapon that lasts for the duration. When you cast the spell, you can make a melee spell attack against a creature within 5 feet of the weapon. On a hit, the target takes 1d8 force damage.",
+    2, // level
+    "evocation", // school
+    "1 bonus action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "1 minute", // duration
+    ["Paladin"], // classes - Added for Paladin balance
+    false, // ritual
+    false // concentration
+  ));
+  
+  // LEVEL 3 SPELLS
+  rulebook.addSpell(new Spell(
+    "fireball",
+    "Fireball",
+    "A bright streak flashes from your finger to a point you choose within range and then blossoms into an explosion of flame. Each creature in a 20-foot-radius sphere must make a Dexterity saving throw or take 8d6 fire damage.",
+    3, // level
+    "evocation", // school
+    "1 action", // casting time
+    "150 feet", // range
+    { verbal: true, somatic: true, material: "A tiny ball of bat guano and sulfur" }, // components
+    "Instantaneous", // duration
+    ["Wizard"], // classes - Wizard only for highest damage
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "call-lightning",
+    "Call Lightning",
+    "A storm cloud appears overhead and you call down a bolt of lightning, striking a point you choose. Each creature within 5 feet of that point must make a Dexterity saving throw or take 3d8 lightning damage.",
+    3, // level
+    "conjuration", // school
+    "1 action", // casting time
+    "120 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "Concentration, up to 10 minutes", // duration
+    ["Druid"], // classes - Druid only for balance
+    false, // ritual
+    true // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "hypnotic-pattern",
+    "Hypnotic Pattern",
+    "You create a twisting pattern of colors that weaves through the air. Each creature in a 30-foot cube must make a Wisdom saving throw or become charmed and incapacitated.",
+    3, // level
+    "illusion", // school
+    "1 action", // casting time
+    "120 feet", // range
+    { verbal: true, somatic: true, material: "A glowing stick of incense or a crystal vial filled with phosphorescent material" }, // components
+    "Concentration, up to 1 minute", // duration
+    ["Bard", "Wizard"], // classes
+    false, // ritual
+    true // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "daylight",
+    "Daylight",
+    "A 60-foot-radius sphere of light spreads out from a point you choose, filling the area with bright light and dim light for an additional 60 feet.",
+    3, // level
+    "evocation", // school
+    "1 action", // casting time
+    "60 feet", // range
+    { verbal: true, somatic: true, material: null }, // components
+    "1 hour", // duration
+    ["Paladin", "Druid"], // classes
+    false, // ritual
+    false // concentration
+  ));
+  
+  rulebook.addSpell(new Spell(
+    "counterspell",
+    "Counterspell",
+    "You attempt to interrupt a creature in the process of casting a spell. If the creature is casting a spell of 3rd level or lower, its spell fails and has no effect.",
+    3, // level
+    "abjuration", // school
+    "1 reaction", // casting time
+    "60 feet", // range
+    { somatic: true, verbal: false, material: null }, // components
+    "Instantaneous", // duration
+    ["Wizard"], // classes - Wizard only for powerful utility
+    false, // ritual
+    false // concentration
+  ));
 
   return rulebook;
 }
+

@@ -3,6 +3,7 @@
     margin: 0 auto;
     padding: 2rem 1rem;
     color: #e0e0e0;
+    margin-top: 80px; /* Header için yer açıyoruz */
   }
   
   .header {
@@ -25,7 +26,7 @@
     font-size: 1.1rem;
     color: #aaa;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 1.5rem;
   }
   
   .divider {
@@ -33,6 +34,47 @@
     width: 100px;
     background: linear-gradient(90deg, transparent, #f0a742, transparent);
     margin: 1.5rem auto;
+  }
+  
+  /* Header Actions */
+  .headerActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .homeButton, .createButton {
+    min-width: 180px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .homeButton {
+    background: transparent;
+    border: 2px solid #f0a742;
+    color: #f0a742;
+    transition: all 0.3s ease;
+  }
+  
+  .homeButton:hover {
+    background: rgba(240, 167, 66, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(240, 167, 66, 0.2);
+  }
+  
+  .createButton {
+    background: linear-gradient(45deg, #f8d12f, #f0a742);
+    border: none;
+    color: #1a1a2e;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(240, 167, 66, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .createButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(240, 167, 66, 0.5);
   }
   
   .loading {
@@ -414,186 +456,6 @@
   letter-spacing: 1px;
 }
 
-.abilityScoreContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.baseScore {
-  font-size: 1rem;
-  color: #ccc;
-  position: relative;
-}
-
-.bonusIndicator {
-  font-size: 0.9rem;
-  color: #f0a742;
-  font-weight: bold;
-  margin: 0.1rem 0;
-}
-
-.totalScoreWithBonus, .totalScoreNoBonus {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-top: 0.2rem;
-}
-
-.totalScoreWithBonus {
-  color: #f0a742;
-}
-
-.abilityMod {
-  color: #aaa;
-  font-size: 1.2rem;
-  margin-top: 0.3rem;
-}
-
-.traitsList,
-.abilitiesList,
-.languagesList {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 2rem;
-  color: #e0e0e0;
-}
-
-/* Yeni stiller - dosyanın sonuna ekleyin */
-
-.sectionHeader {
-  margin: 2rem 0 1rem;
-  color: #f0a742;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border-bottom: 2px solid rgba(240, 167, 66, 0.3);
-  padding-bottom: 0.5rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.abilitiesSummary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-  margin-bottom: 2rem;
-}
-
-.abilitySummaryItem {
-  background: rgba(30, 30, 50, 0.6);
-  border-radius: 8px;
-  padding: 1.2rem 0.8rem;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.abilitySummaryItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-
-.abilityName {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #ccc;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.abilityScoreContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.baseScore {
-  font-size: 1rem;
-  color: #ccc;
-  position: relative;
-}
-
-.bonusIndicator {
-  font-size: 0.9rem;
-  color: #f0a742;
-  font-weight: bold;
-  margin: 0.1rem 0;
-}
-
-.totalScoreWithBonus, .totalScoreNoBonus {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-top: 0.2rem;
-}
-
-.totalScoreWithBonus {
-  color: #f0a742;
-}
-
-.abilityMod {
-  color: #aaa;
-  font-size: 1.2rem;
-  margin-top: 0.3rem;
-}
-
-.traitsList,
-.abilitiesList,
-.languagesList {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 2rem;
-  color: #e0e0e0;
-}
-/* Yeni ability stili - dosyanın sonuna ekleyin */
-
-.sectionHeader {
-  margin: 1.5rem 0 1rem;
-  color: #f0a742;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border-bottom: 2px solid rgba(240, 167, 66, 0.3);
-  padding-bottom: 0.5rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.abilitiesSummary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.abilitySummaryItem {
-  background: rgba(30, 30, 50, 0.7);
-  border-radius: 8px;
-  padding: 1rem 0.8rem;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.abilitySummaryItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-}
-
-.abilityName {
-  font-weight: 700;
-  color: #ccc;
-  text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  margin-bottom: 0.5rem;
-}
-
 .abilityValue {
   display: flex;
   flex-direction: column;
@@ -602,22 +464,24 @@
 }
 
 .abilityTotal {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1;
+  margin-bottom: 0.3rem;
 }
 
 .abilityDetails {
   font-size: 0.9rem;
-  color: #aaa;
+  color: #bbb;
   margin: 0.2rem 0;
 }
 
 .racialBonus {
   font-size: 0.9rem;
   color: #f0a742;
-  margin-left: 2px;
+  margin-left: 3px;
+  font-weight: 600;
 }
 
 .abilityMod {
@@ -626,8 +490,9 @@
   align-items: center;
   background: rgba(20, 20, 35, 0.5);
   border-radius: 4px;
-  padding: 0.2rem 0.5rem;
-  margin-top: 0.3rem;
+  padding: 0.4rem 0.8rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(240, 167, 66, 0.2);
 }
 
 .modifierLabel {
@@ -638,9 +503,160 @@
 }
 
 .modifierValue {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #f0a742;
 }
 
-/* Mevcut stillerinizi buradan itibaren koruyun */
+.spellsSubheader {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin: 1.5rem 0 0.8rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.2);
+  padding-bottom: 0.4rem;
+}
+
+.spellsList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.spellItem {
+  background: rgba(25, 25, 40, 0.6);
+  border-radius: 6px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid rgba(240, 167, 66, 0.3);
+}
+
+.spellName {
+  display: block;
+  color: #f0a742;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.spellMeta {
+  font-size: 0.9rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Equipment styles */
+.equipmentSummary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.weaponsSummary,
+.armorSummary {
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.equipmentSubheader {
+  color: #f0a742;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.2);
+  padding-bottom: 0.4rem;
+}
+
+.equipmentList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.equipmentItem {
+  background: rgba(25, 25, 40, 0.6);
+  border-radius: 6px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid rgba(240, 167, 66, 0.3);
+}
+
+.equipmentName {
+  display: block;
+  color: #f0a742;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}
+
+.equipmentDetails {
+  color: #ddd;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.equipmentProperties,
+.equipmentRange,
+.equipmentDisadvantage,
+.equipmentRequirements {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.noEquipment {
+  color: #888;
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+}
+
+/* Health styles */
+.healthSummary {
+  background: rgba(30, 30, 50, 0.4);
+  border-radius: 8px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  border-left: 3px solid rgba(220, 53, 69, 0.6);
+}
+
+.healthItem {
+  display: flex;
+  flex-direction: column;
+  background: rgba(25, 25, 40, 0.6);
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.healthLabel {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.healthValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dc3545;
+  text-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+}
+
+.healthDetails {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #bbb;
+  padding-left: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .equipmentSummary {
+    grid-template-columns: 1fr;
+  }
+}

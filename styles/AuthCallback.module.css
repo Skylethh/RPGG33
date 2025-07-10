@@ -1,0 +1,133 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.card {
+  background: rgba(25, 25, 35, 0.95);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(240, 167, 66, 0.2);
+  border: 1px solid rgba(240, 167, 66, 0.2);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.iconContainer {
+  margin-bottom: 2rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(240, 167, 66, 0.2);
+  border-radius: 50%;
+  border-top-color: #f0a742;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.successIcon {
+  width: 70px;
+  height: 70px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2.5rem;
+  animation: scaleIn 0.3s ease;
+}
+
+.errorIcon {
+  width: 70px;
+  height: 70px;
+  background: #f44336;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2.5rem;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.title {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+  background: linear-gradient(45deg, #f8d12f, #f0a742);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Cinzel', serif;
+}
+
+.message {
+  color: #ddd;
+  margin: 0 0 2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.actions {
+  margin-top: 2rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: linear-gradient(45deg, #f8d12f, #f0a742);
+  border: none;
+  color: #1a1a2e;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(240, 167, 66, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+  
+  .message {
+    font-size: 1rem;
+  }
+} 

@@ -261,3 +261,52 @@
   font-style: italic;
   line-height: 1.6;
 }
+/* Spells Display Styles */
+.spellsSubheader {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  margin: 1.5rem 0 0.8rem;
+  border-bottom: 1px solid rgba(240, 167, 66, 0.2);
+  padding-bottom: 0.4rem;
+}
+
+.spellsList {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.spellItem {
+  background: rgba(30, 30, 50, 0.5);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+  border-left: 3px solid rgba(240, 167, 66, 0.4);
+  transition: all 0.2s ease;
+}
+
+.spellItem:hover {
+  background: rgba(40, 40, 60, 0.6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(3px);
+}
+
+.spellName {
+  display: block;
+  font-weight: 600;
+  color: #f0a742;
+  margin-bottom: 0.3rem;
+}
+
+.autoSpellIcon {
+  font-size: 0.9rem;
+  vertical-align: super;
+  margin-left: 5px;
+  color: #f0a742;
+}
+
+.spellMeta {
+  font-size: 0.9rem;
+  color: #bbb;
+  font-style: italic;
+}

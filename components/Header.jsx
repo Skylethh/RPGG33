@@ -1,64 +1,145 @@
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSession, signOut } from "next-auth/react";
+import { useRouter } from 'next/router';
+import styles from '../styles/Header.module.css';
+import AuthModal from './AuthModal';
+import { useAuth } from '../hooks/useAuth';
+import { FaUser, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 
-export default function Header() {
-  const { data: session } = useSession();
-  const [menuOpen, setMenuOpen] = useState(false);
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+  const { user, logout } = useAuth();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const router = useRouter();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToAbout = () => {
+    // Check if we're on the homepage
+    if (router.pathname === '/') {
+      // Get the about section element
+      const aboutSection = document.getElementById('about-section');
+      
+      // If the element exists, scroll to it
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If not on homepage, navigate to homepage and then scroll to about
+      router.push('/#about-section');
+    }
+  };
+
+  const handleLogin = () => {
+    setAuthMode('login');
+    setShowAuthModal(true);
+  };
+
+  const handleSignup = () => {
+    setAuthMode('signup');
+    setShowAuthModal(true);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setShowUserMenu(false);
+    router.push('/');
+  };
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
   };
 
   return (
-    <header className={menuOpen ? 'menu-open' : ''}>
-      <div className="logo">
-        <Link href="/">
-          <h1>Dragon<span>QuestAI</span></h1>
-        </Link>
-      </div>
-
-      <div className="menu-toggle" onClick={toggleMenu}>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-      </div>
-
-      <nav>
-        <ul className="main-nav">
-          <li><Link href="/">Ana Sayfa</Link></li>
-          <li><Link href="/#rules">Kurallar</Link></li>
-          <li><Link href="/about">Hakkında</Link></li>
-          <li><Link href="/existing-characters">Karakterler</Link></li>
-          <li><Link href="/rules">Kitapçık</Link></li>
-        </ul>
-
-        <ul className="auth-nav">
-          {session ? (
-            <li className="user-dropdown">
-              <button className="auth-button">
-                <FontAwesomeIcon icon={faUser} />
-                <span>{session.user.name}</span>
-              </button>
-              <div className="dropdown-content">
-                <Link href="/profile">Profil</Link>
-                <button onClick={() => signOut({ callbackUrl: '/' })}>Çıkış Yap</button>
-              </div>
-            </li>
-          ) : (
-            <li>
-              <Link href="/login" className="auth-button">
-                <FontAwesomeIcon icon={faUser} /> Giriş Yap
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+      <div className={styles.container}>
+        <div className={styles.logo}>
+          <Link href="/">
+            <span className={styles.logoText}><span className={styles.sagText}>SAG</span><span className={styles.aiText}>AI</span></span>
+          </Link>
+        </div>
+        
+        <nav className={styles.nav}>
+          <ul className={styles.navList}>
+            <li className={styles.navItem}>
+              <Link href="/" className={router.pathname === '/' ? styles.active : ''}>
+                Home
               </Link>
             </li>
+            <li className={styles.navItem}>
+              <Link href="/rules" className={router.pathname === '/rules' ? styles.active : ''}>
+                Rulebook
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/existing-characters" className={router.pathname === '/existing-characters' ? styles.active : ''}>
+                Characters
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <a onClick={scrollToAbout} className={styles.aboutLink}>
+                About
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <div className={styles.auth}>
+          {user ? (
+            <div className={styles.userMenu}>
+              <button className={styles.userButton} onClick={toggleUserMenu}>
+                <FaUser className={styles.userIcon} />
+                <span>{user.user_metadata?.username || user.email.split('@')[0]}</span>
+                <FaChevronDown className={`${styles.chevron} ${showUserMenu ? styles.chevronUp : ''}`} />
+              </button>
+              
+              {showUserMenu && (
+                <div className={styles.userDropdown}>
+                  <Link href="/profile" className={styles.userDropdownItem}>
+                    <FaUser className={styles.dropdownIcon} />
+                    <span>My Profile</span>
+                  </Link>
+                  <button className={styles.userDropdownItem} onClick={handleLogout}>
+                    <FaSignOutAlt className={styles.dropdownIcon} />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <button className={styles.loginButton} onClick={handleLogin}>
+                Login
+              </button>
+              <button className={styles.signupButton} onClick={handleSignup}>
+                Sign Up
+              </button>
+            </>
           )}
-          <li>
-            <Link href="/start" className="start-btn">Oyna</Link>
-          </li>
-        </ul>
-      </nav>
+        </div>
+      </div>
+      
+      {showAuthModal && (
+        <AuthModal 
+          mode={authMode} 
+          onClose={() => setShowAuthModal(false)} 
+          onSuccess={() => {
+            setShowAuthModal(false);
+          }}
+          onSwitchMode={(mode) => setAuthMode(mode)}
+        />
+      )}
     </header>
   );
-}
+};
+
+export default Header;

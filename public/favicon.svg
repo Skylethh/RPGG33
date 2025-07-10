@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#1a1a2e" />
+  
+  <!-- SAGAI text -->
+  <text x="50" y="60" font-family="Cinzel, serif" font-size="28" font-weight="700" text-anchor="middle" fill="#ffffff">
+    <tspan fill="#f0a500">SAG</tspan><tspan fill="#4d80e4">AI</tspan>
+  </text>
+</svg>

@@ -1,8 +1,8 @@
-import Race from './Race';
-import Class from './Class';
-import Language from './Language';
-import { Item, Weapon, Armor } from './Item';
-import Spell from './Spell';
+const Race = require('../models/Race');
+const Class = require('../models/Class');
+const Language = require('../models/Language');
+const { Item, Weapon, Armor } = require('../models/Item');
+const Spell = require('../models/Spell');
 
 class RuleBook {
   constructor() {
@@ -103,4 +103,12 @@ class RuleBook {
   }
 }
 
-export default RuleBook;
+// Kural kitabını başlatmak için yardımcı fonksiyon
+function initializeRuleBook() {
+  const rulebook = new RuleBook();
+  // Burada varsayılan ırklar, sınıflar, diller, eşyalar ve büyüler eklenebilir
+  return rulebook;
+}
+
+module.exports = RuleBook;
+module.exports.initializeRuleBook = initializeRuleBook;

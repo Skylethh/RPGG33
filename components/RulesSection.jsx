@@ -10,11 +10,6 @@ export default function RulesSection() {
         <p>Our comprehensive rulebook contains everything you need to navigate the realms.</p>
         <div className="rules-grid">
           <div className="rule-card">
-            <FontAwesomeIcon icon={faLanguage} size="2x" />
-            <h3>Languages</h3>
-            <p>Discover the tongues of elves, dwarves, and forgotten ancient civilizations.</p>
-          </div>
-          <div className="rule-card">
             <FontAwesomeIcon icon={faUsers} size="2x" />
             <h3>Races</h3>
             <p>Choose from dozens of unique races, each with special abilities and histories.</p>
@@ -23,6 +18,11 @@ export default function RulesSection() {
             <FontAwesomeIcon icon={faHatWizard} size="2x" />
             <h3>Classes</h3>
             <p>Become a mighty warrior, cunning rogue, or master of arcane arts.</p>
+          </div>
+          <div className="rule-card">
+            <FontAwesomeIcon icon={faLanguage} size="2x" />
+            <h3>Languages</h3>
+            <p>Discover the tongues of elves, dwarves, and forgotten ancient civilizations.</p>
           </div>
           <div className="rule-card">
             <FontAwesomeIcon icon={faScroll} size="2x" />

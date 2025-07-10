@@ -1,50 +1,88 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Layout from '../components/Layout';
-import Link from 'next/link';
 import styles from '../styles/ExistingCharacters.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faTrash, faPlus, faUser, faGem, faCalendarAlt, faEye, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { initializeRuleBook } from '../data/sampleRuleData';
 
 export default function ExistingCharacters() {
+  const router = useRouter();
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [viewingCharacter, setViewingCharacter] = useState(null);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const rulebook = initializeRuleBook();
-  
-  // Karakter verilerini yükleme
+
+  // Load characters from local storage
   useEffect(() => {
-    // LocalStorage'dan kaydedilmiş karakterleri al
-    const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
-    
-    // Kısa bir gecikme ile karakterleri yükle (yükleme efekti için)
-    setTimeout(() => {
-      setCharacters(savedCharacters);
-      setLoading(false);
-    }, 600);
+    const loadCharacters = () => {
+      try {
+        const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
+        setCharacters(savedCharacters.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+      } catch (error) {
+        console.error('Error loading characters:', error);
+        setCharacters([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCharacters();
   }, []);
-  
-  const deleteCharacter = (id) => {
-    // Silme işlemini onayla
-    if (window.confirm('Bu karakteri silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
-      // State'teki karakteri sil
-      const updatedCharacters = characters.filter(char => char.id !== id);
+
+  const handleViewDetails = (character) => {
+    setSelectedCharacter(character);
+    setShowModal(true);
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this character?')) {
+      const updatedCharacters = characters.filter(character => character.id !== id);
+      localStorage.setItem('characters', JSON.stringify(updatedCharacters));
       setCharacters(updatedCharacters);
       
-      // LocalStorage'dan da sil
-      localStorage.setItem('characters', JSON.stringify(updatedCharacters));
+      if (selectedCharacter?.id === id) {
+        setShowModal(false);
+      }
     }
   };
 
-  const viewCharacterDetails = (character) => {
-    setViewingCharacter(character);
+  const handleEditCharacter = (id) => {
+    router.push(`/edit-character/${id}`);
   };
 
-  const closeCharacterDetails = () => {
-    setViewingCharacter(null);
+  const handleStartGame = (id) => {
+    router.push(`/game?character=${id}`);
   };
-  
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  };
+
+  // Utility functions
+  // Fixed HP values for each class - extract as a constant to avoid duplication
+  const FIXED_HP_BY_CLASS = {
+    'wizard': 6,
+    'bard': 8,
+    'druid': 8,
+    'paladin': 10,
+    'rogue': 8,
+    'fighter': 10,
+    'barbarian': 12
+  };
+
+  // Check if character is a spellcaster
+  const isSpellcaster = (characterClass) => {
+    return ['bard', 'wizard', 'druid', 'paladin'].includes(characterClass);
+  };
+
   // Calculate modifier from ability score
   const getModifier = (score) => {
     return Math.floor((score - 10) / 2);
@@ -54,35 +92,70 @@ export default function ExistingCharacters() {
   const formatModifier = (mod) => {
     return mod >= 0 ? `+${mod}` : mod.toString();
   };
-  
+
+  // Calculate character's health based on class and constitution modifier
+  const calculateHealth = (characterClass, constitutionScore, level = 1) => {
+    try {
+      // Get base health from class
+      const baseHealth = FIXED_HP_BY_CLASS[characterClass] || 8;
+      
+      // Calculate constitution modifier
+      const conModifier = getModifier(constitutionScore);
+      
+      // Maximum health at level 1 is base health + constitution modifier
+      const maxHealth = baseHealth + conModifier;
+      
+      return { maxHealth: Math.max(1, maxHealth) }; // Ensure health is always at least 1
+    } catch (error) {
+      console.error('Error calculating health:', error);
+      return { maxHealth: 8 }; // Default fallback
+    }
+  };
+
   return (
     <Layout>
       <Head>
-        <title>Your Characters | DragonQuest AI</title>
-        <meta name="description" content="View and manage your created characters" />
+        <title>Your Characters | SAGAI</title>
+        <meta name="description" content="Manage your existing characters" />
       </Head>
       
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1 className={styles.title}>Your Characters</h1>
-          <p className={styles.subtitle}>Select a character to continue your adventure or forge a new hero</p>
           <div className={styles.divider}></div>
+          <p className={styles.subtitle}>Manage your existing characters and continue your adventures</p>
+          
+          <div className={styles.headerActions}>
+            <button 
+              className={`${styles.button} ${styles.secondaryButton} ${styles.homeButton}`}
+              onClick={() => router.push('/')}
+            >
+              Return to Home
+            </button>
+            <button 
+              className={`${styles.button} ${styles.primaryButton} ${styles.createButton}`}
+              onClick={() => router.push('/create-character')}
+            >
+              Create New Character
+            </button>
+          </div>
         </div>
         
         {loading ? (
           <div className={styles.loading}>
             <div className={styles.loadingIcon}></div>
-            <p>Summoning your characters...</p>
+            <p>Loading your characters...</p>
           </div>
         ) : characters.length === 0 ? (
           <div className={styles.noCharacters}>
             <p className={styles.noCharactersText}>
-              You haven't created any characters yet!
-              <br />Begin your journey by creating your first hero.
+              You haven't created any characters yet. Create your first character to begin your adventure!
             </p>
-            <Link href="/create-character" className={`${styles.button} ${styles.primaryButton}`}>
-              <FontAwesomeIcon icon={faPlus} /> Create Your First Character
-            </Link>
+            <button 
+              className={`${styles.button} ${styles.primaryButton} ${styles.createButton}`}
+              onClick={() => router.push('/create-character')}
+            >
+              Create Your First Character
+            </button>
           </div>
         ) : (
           <>
@@ -96,153 +169,303 @@ export default function ExistingCharacters() {
                   <div className={styles.characterInfo}>
                     <div className={styles.characterDetails}>
                       <div className={styles.detailItem}>
-                        <FontAwesomeIcon icon={faUser} />
-                        <span className={styles.detailLabel}>Identity:</span>
+                        <span className={styles.detailLabel}>Race:</span>
                         <span className={styles.detailValue}>
-                          {character.race && character.class ? 
-                            `${rulebook.races.find(r => r.id === character.race)?.name} ${rulebook.classes.find(c => c.id === character.class)?.name}` : 
-                            character.race || character.class || 'Unknown'}
+                          {rulebook.races.find(r => r.id === character.race)?.name || 'Unknown'}
                         </span>
                       </div>
-                      
-                      {(character.level || character.level === 0) && (
-                        <div className={styles.detailItem}>
-                          <FontAwesomeIcon icon={faGem} />
-                          <span className={styles.detailLabel}>Level:</span>
-                          <span className={styles.detailValue}>{character.level || 1}</span>
-                        </div>
-                      )}
-                      
                       <div className={styles.detailItem}>
-                        <FontAwesomeIcon icon={faCalendarAlt} />
-                        <span className={styles.detailLabel}>
-                          {character.lastPlayed ? 'Last Played:' : 'Created:'}
-                        </span>
+                        <span className={styles.detailLabel}>Gender:</span>
                         <span className={styles.detailValue}>
-                          {character.lastPlayed ? 
-                            new Date(character.lastPlayed).toLocaleDateString() : 
-                            new Date(character.createdAt || Date.now()).toLocaleDateString()
-                          }
+                          {character.gender ? (character.gender.charAt(0).toUpperCase() + character.gender.slice(1)) : 'Unknown'}
+                        </span>
+                      </div>
+                      <div className={styles.detailItem}>
+                        <span className={styles.detailLabel}>Class:</span>
+                        <span className={styles.detailValue}>
+                          {rulebook.classes.find(c => c.id === character.class)?.name || 'Unknown'}
+                        </span>
+                      </div>
+                      <div className={styles.detailItem}>
+                        <span className={styles.detailLabel}>Created:</span>
+                        <span className={styles.detailValue}>
+                          {formatDate(character.createdAt)}
                         </span>
                       </div>
                     </div>
                   </div>
                   
                   <div className={styles.characterActions}>
-                    <button className={`${styles.button} ${styles.primaryButton}`}>
-                      <FontAwesomeIcon icon={faPlay} /> Play
-                    </button>
                     <button 
                       className={`${styles.button} ${styles.secondaryButton}`}
-                      onClick={() => viewCharacterDetails(character)}
+                      onClick={() => handleViewDetails(character)}
                     >
-                      <FontAwesomeIcon icon={faEye} /> View Details
+                      View Details
+                    </button>
+                    <button 
+                      className={`${styles.button} ${styles.primaryButton}`}
+                      onClick={() => handleStartGame(character.id)}
+                    >
+                      Play
                     </button>
                     <button 
                       className={`${styles.button} ${styles.dangerButton} ${styles.deleteAction}`}
-                      onClick={() => deleteCharacter(character.id)}
+                      onClick={() => handleDelete(character.id)}
                     >
-                      <FontAwesomeIcon icon={faTrash} /> Delete Character
+                      Delete Character
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-            
-            <div className={styles.createNew}>
-              <Link href="/create-character" className={`${styles.button} ${styles.primaryButton}`}>
-                <FontAwesomeIcon icon={faPlus} /> Create New Character
-              </Link>
-            </div>
           </>
         )}
-        
-        {/* Karakter Özeti Modalı */}
-        {viewingCharacter && (
-          <div className={styles.modalOverlay} onClick={closeCharacterDetails}>
-            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-              <div className={styles.modalHeader}>
-                <h2 className={styles.modalTitle}>{viewingCharacter.name}</h2>
-                <button 
-                  className={styles.closeButton} 
-                  onClick={closeCharacterDetails}
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
+      </div>
+      
+      {showModal && selectedCharacter && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle}>{selectedCharacter.name}</h2>
+              <button 
+                className={styles.closeButton}
+                onClick={() => setShowModal(false)}
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className={styles.characterSummary}>
+              <div className={styles.characterType}>
+                {rulebook.races.find(r => r.id === selectedCharacter.race)?.name || 'Unknown'} {' '}
+                {selectedCharacter.gender ? `(${selectedCharacter.gender.charAt(0).toUpperCase() + selectedCharacter.gender.slice(1)})` : ''} {' '}
+                {rulebook.classes.find(c => c.id === selectedCharacter.class)?.name || 'Unknown'}
               </div>
               
-              <div className={styles.characterSummary}>
-                <div className={styles.characterType}>
-                  {rulebook.races.find(r => r.id === viewingCharacter.race)?.name} {rulebook.classes.find(c => c.id === viewingCharacter.class)?.name}
+              {/* Health Section (NEW) */}
+              <h3 className={styles.sectionHeader}>Health</h3>
+              <div className={styles.healthSummary}>
+                {(() => {
+                  const constitutionScore = selectedCharacter.abilities.constitution + 
+                    (rulebook.races.find(r => r.id === selectedCharacter.race)?.statBonuses.constitution || 0);
+                  const { maxHealth } = calculateHealth(
+                    selectedCharacter.class, 
+                    constitutionScore
+                  );
+                  
+                  return (
+                    <>
+                      <div className={styles.healthItem}>
+                        <span className={styles.healthLabel}>Max HP:</span>
+                        <span className={styles.healthValue}>{maxHealth}</span>
+                      </div>
+                      <div className={styles.healthDetails}>
+                        Based on your Constitution modifier ({formatModifier(getModifier(constitutionScore))})
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+              
+              <h3 className={styles.sectionHeader}>Abilities</h3>
+              <div className={styles.abilitiesSummary}>
+                {Object.entries(selectedCharacter.abilities).map(([ability, value]) => {
+                  const raceBonus = rulebook.races.find(r => r.id === selectedCharacter.race)?.statBonuses[ability] || 0;
+                  const totalValue = value + raceBonus;
+                  const modifier = getModifier(totalValue);
+                  
+                  return (
+                    <div key={ability} className={styles.abilitySummaryItem}>
+                      <div className={styles.abilityName}>
+                        {ability.substr(0, 3).toUpperCase()}
+                      </div>
+                      <div className={styles.abilityValue}>
+                        <div className={styles.abilityTotal}>{totalValue}</div>
+                        <div className={styles.abilityDetails}>
+                          {value} 
+                          {raceBonus > 0 && (
+                            <span className={styles.racialBonus}>+{raceBonus}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className={styles.abilityMod}>
+                        <span className={styles.modifierLabel}>MOD</span>
+                        <span className={styles.modifierValue}>
+                          {formatModifier(modifier)}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              <h3 className={styles.sectionHeader}>Racial Traits</h3>
+              <ul className={styles.traitsList}>
+                {rulebook.races.find(r => r.id === selectedCharacter.race)?.traits.map(trait => (
+                  <li key={trait}>{trait}</li>
+                ))}
+              </ul>
+              
+              <h3 className={styles.sectionHeader}>Racial Abilities</h3>
+              <ul className={styles.abilitiesList}>
+                {rulebook.races.find(r => r.id === selectedCharacter.race)?.abilities.map(ability => (
+                  <li key={ability.name}>
+                    <strong>{ability.name}:</strong> {ability.description}
+                  </li>
+                ))}
+              </ul>
+              
+              {/* Spellcasting Section (NEW) */}
+              {isSpellcaster(selectedCharacter.class) && 
+                (selectedCharacter.cantrips?.length > 0 || selectedCharacter.spells?.length > 0) && (
+                <div>
+                  <h3 className={styles.sectionHeader}>Spellcasting</h3>
+                  
+                  {selectedCharacter.cantrips?.length > 0 && (
+                    <div>
+                      <h4 className={styles.spellsSubheader}>Cantrips</h4>
+                      <ul className={styles.spellsList}>
+                        {selectedCharacter.cantrips.map(spellId => {
+                          const spell = rulebook.spells.find(s => s.id === spellId);
+                          return spell ? (
+                            <li key={spellId} className={styles.spellItem}>
+                              <span className={styles.spellName}>{spell.name}</span>
+                              <span className={styles.spellMeta}>
+                                {spell.school}, {spell.castingTime}, {spell.range}
+                              </span>
+                            </li>
+                          ) : (
+                            <li key={spellId} className={styles.spellItem}>Unknown Spell ({spellId})</li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {selectedCharacter.spells?.length > 0 && (
+                    <div>
+                      <h4 className={styles.spellsSubheader}>Level 1 Spells</h4>
+                      <ul className={styles.spellsList}>
+                        {selectedCharacter.spells.map(spellId => {
+                          const spell = rulebook.spells.find(s => s.id === spellId);
+                          return spell ? (
+                            <li key={spellId} className={styles.spellItem}>
+                              <span className={styles.spellName}>{spell.name}</span>
+                              <span className={styles.spellMeta}>
+                                {spell.school}
+                                {spell.ritual ? ' (Ritual)' : ''}, 
+                                {spell.concentration ? ' Concentration, ' : ' '}
+                                {spell.duration}
+                              </span>
+                            </li>
+                          ) : (
+                            <li key={spellId} className={styles.spellItem}>Unknown Spell ({spellId})</li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Equipment Section (NEW) */}
+              <h3 className={styles.sectionHeader}>Equipment</h3>
+              <div className={styles.equipmentSummary}>
+                {/* Weapons */}
+                <div className={styles.weaponsSummary}>
+                  <h4 className={styles.equipmentSubheader}>Weapons</h4>
+                  {selectedCharacter.weapons && selectedCharacter.weapons.length > 0 ? (
+                    <ul className={styles.equipmentList}>
+                      {selectedCharacter.weapons.map(weaponId => {
+                        const weapon = rulebook.items.find(item => item.id === weaponId);
+                        return weapon ? (
+                          <li key={weaponId} className={styles.equipmentItem}>
+                            <span className={styles.equipmentName}>{weapon.name}</span>
+                            <div className={styles.equipmentDetails}>
+                              <span>{weapon.damageAmount} {weapon.damageType} damage</span>
+                              {weapon.properties && weapon.properties.length > 0 && (
+                                <span className={styles.equipmentProperties}>
+                                  Properties: {weapon.properties.join(', ')}
+                                </span>
+                              )}
+                              {weapon.range && (
+                                <span className={styles.equipmentRange}>
+                                  Range: {weapon.range.normal}/{weapon.range.long} ft
+                                </span>
+                              )}
+                            </div>
+                          </li>
+                        ) : (
+                          <li key={weaponId} className={styles.equipmentItem}>Unknown Weapon</li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <p className={styles.noEquipment}>No weapons equipped</p>
+                  )}
                 </div>
                 
-                
-
-                
-
-<h4 className={styles.sectionHeader}>Abilities</h4>
-<div className={styles.abilitiesSummary}>
-  {Object.keys(viewingCharacter.abilities).map(ability => {
-    // Irktan gelen bonus değerini bul
-    const raceBonus = rulebook.races.find(r => r.id === viewingCharacter.race)?.statBonuses[ability] || 0;
-    // Gerçek değeri hesapla (karakter puan + ırk bonusu)
-    const totalValue = viewingCharacter.abilities[ability] + raceBonus;
-    
-    return (
-      <div key={ability} className={styles.abilitySummaryItem}>
-        <div className={styles.abilityName}>{ability.substr(0, 3).toUpperCase()}</div>
-        <div className={styles.abilityValue}>
-          <div className={styles.abilityTotal}>{totalValue}</div>
-          <div className={styles.abilityDetails}>
-            {viewingCharacter.abilities[ability]} 
-            {raceBonus > 0 && <span className={styles.racialBonus}>+{raceBonus}</span>}
-          </div>
-        </div>
-        <div className={styles.abilityMod}>
-          <span className={styles.modifierLabel}>MOD</span>
-          <span className={styles.modifierValue}>{formatModifier(getModifier(totalValue))}</span>
-        </div>
-      </div>
-    );
-  })}
-</div>
-                
-                <h4 className={styles.sectionHeader}>Racial Traits</h4>
-                <ul className={styles.traitsList}>
-                  {rulebook.races.find(r => r.id === viewingCharacter.race)?.traits.map(trait => (
-                    <li key={trait}>{trait}</li>
-                  ))}
-                </ul>
-                
-                <h4 className={styles.sectionHeader}>Racial Abilities</h4>
-                <ul className={styles.abilitiesList}>
-                  {rulebook.races.find(r => r.id === viewingCharacter.race)?.abilities.map(ability => (
-                    <li key={ability.name}>
-                      <strong>{ability.name}:</strong> {ability.description}
-                    </li>
-                  ))}
-                </ul>
-                
-                <h4 className={styles.sectionHeader}>Languages</h4>
-                <ul className={styles.languagesList}>
-                  {viewingCharacter.languages.map(langId => (
-                    <li key={langId}>
-                      {rulebook.languages.find(l => l.id === langId)?.name}
-                    </li>
-                  ))}
-                </ul>
-                
-                {viewingCharacter.background && (
-  <>
-    <h4 className={styles.sectionHeader}>Background</h4>
-    <p className={styles.backgroundText}>{viewingCharacter.background}</p>
-  </>
-)}
+                {/* Armor */}
+                <div className={styles.armorSummary}>
+                  <h4 className={styles.equipmentSubheader}>Armor</h4>
+                  {selectedCharacter.armor ? (
+                    <div className={styles.equipmentItem}>
+                      {(() => {
+                        const armor = rulebook.items.find(item => item.id === selectedCharacter.armor);
+                        return armor ? (
+                          <>
+                            <span className={styles.equipmentName}>{armor.name}</span>
+                            <div className={styles.equipmentDetails}>
+                              <span>AC {armor.armorClass}</span>
+                              {armor.properties && armor.properties.length > 0 && (
+                                <span className={styles.equipmentProperties}>
+                                  Properties: {armor.properties.join(', ')}
+                                </span>
+                              )}
+                              {armor.stealthDisadvantage && (
+                                <span className={styles.equipmentDisadvantage}>
+                                  Stealth: Disadvantage
+                                </span>
+                              )}
+                              {armor.requirements && Object.keys(armor.requirements).length > 0 && (
+                                <span className={styles.equipmentRequirements}>
+                                  Requirements: {Object.entries(armor.requirements)
+                                    .map(([stat, value]) => `${stat.charAt(0).toUpperCase() + stat.slice(1)} ${value}`)
+                                    .join(', ')}
+                                </span>
+                              )}
+                            </div>
+                          </>
+                        ) : (
+                          <span>Unknown Armor</span>
+                        );
+                      })()}
+                    </div>
+                  ) : (
+                    <p className={styles.noEquipment}>No armor equipped</p>
+                  )}
+                </div>
               </div>
+              
+              <h3 className={styles.sectionHeader}>Languages</h3>
+              <ul className={styles.languagesList}>
+                {selectedCharacter.languages?.map(langId => (
+                  <li key={langId}>
+                    {rulebook.languages.find(l => l.id === langId)?.name || 'Unknown Language'}
+                  </li>
+                ))}
+              </ul>
+              
+              {selectedCharacter.background && (
+                <>
+                  <h3 className={styles.sectionHeader}>Background</h3>
+                  <p className={styles.backgroundText}>{selectedCharacter.background}</p>
+                </>
+              )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 }

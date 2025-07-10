@@ -116,32 +116,43 @@
 }
 
 .description {
-  font-size: 1rem;
-  color: #bbb; /* Açık gri metin */
-  margin-bottom: 1rem;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  color: #ddd; /* Daha açık metin rengi */
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  font-family: 'Roboto', sans-serif;
+  padding: 0.8rem;
+  background: rgba(20, 20, 35, 0.5);
+  border-radius: 6px;
+  border-left: 3px solid rgba(255, 165, 0, 0.5);
 }
 
 h4 {
-  font-size: 1.1rem;
-  margin: 1.2rem 0 0.5rem;
-  color: #ddd;
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.8rem;
+  color: #ffa500;
+  border-bottom: 1px solid rgba(255, 165, 0, 0.3);
+  padding-bottom: 0.3rem;
 }
 
 /* Detail Items */
 .detail-item {
   display: flex;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  background: rgba(20, 20, 35, 0.4);
+  padding: 0.7rem;
+  border-radius: 4px;
 }
 
 .detail-label {
   font-weight: 600;
-  min-width: 120px;
+  min-width: 150px;
   color: #ffa500; /* Altın etiket */
 }
 
 .detail-value {
   color: #ddd; /* Açık gri değer */
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Lists */
@@ -152,8 +163,9 @@ h4 {
 .equipment-list {
   list-style: disc;
   padding-left: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ccc;
+  margin-bottom: 1.5rem;
+  color: #ddd;
+  font-family: 'Roboto', sans-serif;
 }
 
 .stat-bonuses li,
@@ -161,23 +173,41 @@ h4 {
 .abilities-list li,
 .features-list li,
 .equipment-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.6;
+}
+
+.abilities-list li,
+.features-list li {
+  background: rgba(20, 20, 35, 0.4);
+  padding: 0.8rem;
+  border-radius: 4px;
+  list-style-position: inside;
+  margin-bottom: 0.8rem;
+}
+
+.abilities-list li strong,
+.features-list li strong {
+  color: #ffa500;
+  font-weight: 600;
 }
 
 /* Races Section Specific */
 .race-card .lore {
   font-style: italic;
-  color: #aaa;
+  color: #bbb;
   border-left: 3px solid #ffa500; /* Altın kenar çizgisi */
-  padding-left: 1rem;
-  margin-top: 0.8rem;
+  padding: 1rem;
+  margin-top: 1.2rem;
+  background: rgba(20, 20, 35, 0.4);
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Items Section Specific */
-.items-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+/* Items Section Styling */
+.items-section {
+  margin-bottom: 2rem;
 }
 
 .item-filters {
@@ -185,39 +215,93 @@ h4 {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+  background-color: rgba(30, 30, 40, 0.7);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.filter-button {
-  background: rgba(40, 40, 60, 0.8);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #ccc;
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-.filter-button.active {
-  background: rgba(255, 165, 0, 0.7); /* Altın arka plan */
-  color: #111;
-  font-weight: bold;
+.item-card {
+  background-color: rgba(30, 30, 40, 0.7);
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #d0a85c;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.filter-button:hover:not(.active) {
-  background: rgba(255, 165, 0, 0.2);
-  color: #fff;
+.item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.item-card h3 {
+  color: #d0a85c;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid rgba(208, 168, 92, 0.3);
+  padding-bottom: 0.5rem;
 }
 
 .item-type {
-  font-size: 0.9rem;
-  color: #888;
-  margin-bottom: 1rem;
   font-style: italic;
+  color: #aaa;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
-/* Spells Section Specific */
-.spell-filters {
+.item-card .description {
+  color: #bbb;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  background-color: rgba(20, 20, 30, 0.3);
+  padding: 0.8rem;
+  border-radius: 6px;
+  border-left: 2px solid rgba(208, 168, 92, 0.5);
+  margin-bottom: 1rem;
+}
+
+.item-details {
+  background-color: rgba(20, 20, 30, 0.5);
+  padding: 0.8rem;
+  border-radius: 6px;
+}
+
+.item-card .detail-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item-card .detail-label {
+  min-width: 120px;
+  font-weight: bold;
+  color: #d0a85c;
+}
+
+.item-card .detail-value {
+  flex: 1;
+  color: #ddd;
+}
+
+/* Spells Section Styling */
+.spells-section {
   margin-bottom: 2rem;
+}
+
+.spell-filters {
+  background-color: rgba(30, 30, 40, 0.7);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .filter-group {
@@ -226,9 +310,10 @@ h4 {
 
 .filter-group label {
   display: block;
+  font-weight: bold;
   margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #ddd;
+  color: #d0a85c;
+  font-size: 1.1rem;
 }
 
 .button-group {
@@ -237,27 +322,182 @@ h4 {
   gap: 0.5rem;
 }
 
-.spell-level {
+.filter-button {
+  background-color: rgba(40, 40, 50, 0.8);
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
   font-size: 0.9rem;
-  color: #ffa500; /* Altın vurgu */
-  margin-bottom: 1rem;
 }
 
-.ritual-tag,
-.concentration-tag {
+.filter-button:hover {
+  background-color: rgba(60, 60, 70, 0.8);
+  border-color: #666;
+}
+
+.filter-button.active {
+  background-color: #d0a85c;
+  color: #222;
+  border-color: #d0a85c;
+  font-weight: bold;
+}
+
+.spells-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.spell-card {
+  background-color: rgba(30, 30, 40, 0.7);
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid #d0a85c;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.spell-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.spell-card h3 {
+  color: #d0a85c;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  border-bottom: 1px solid rgba(208, 168, 92, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.spell-level {
   font-style: italic;
   color: #aaa;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
 }
 
-/* Responsive adjustments */
+.ritual-tag, .concentration-tag {
+  color: #d0a85c;
+  font-weight: bold;
+}
+
+.spell-details {
+  margin-bottom: 1rem;
+  background-color: rgba(20, 20, 30, 0.5);
+  padding: 0.8rem;
+  border-radius: 6px;
+}
+
+.spell-card .detail-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.spell-card .detail-label {
+  min-width: 120px;
+  font-weight: bold;
+  color: #d0a85c;
+}
+
+.spell-card .detail-value {
+  flex: 1;
+  color: #ddd;
+}
+
+.spell-card .description {
+  color: #bbb;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  background-color: rgba(20, 20, 30, 0.3);
+  padding: 0.8rem;
+  border-radius: 6px;
+  border-left: 2px solid rgba(208, 168, 92, 0.5);
+}
+
+/* Class Detail Grid */
+.class-detail-grid {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0;
+  gap: 0.8rem;
+  background: rgba(20, 20, 35, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Centered details */
+.centered-details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.centered-details .detail-item {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 165, 0, 0.1);
+  padding: 0.8rem 1rem;
+  background: rgba(20, 20, 35, 0.2);
+}
+
+.centered-details .detail-label {
+  text-align: right;
+  padding-right: 20px;
+  flex: 0 0 180px;
+  border-right: 2px solid rgba(255, 165, 0, 0.3);
+  color: #ffa500;
+}
+
+.centered-details .detail-value {
+  text-align: left;
+  flex: 1;
+  padding-left: 20px;
+  color: #ddd;
+}
+
+/* Race and Class Headers */
+.race-header,
+.class-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.race-header:hover,
+.class-header:hover {
+  background-color: rgba(255, 165, 0, 0.1);
+}
+
+/* Toggle Icon */
+.toggle-icon {
+  font-size: 1.5rem;
+  color: #ffa500;
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .rulebook-tabs {
     flex-wrap: wrap;
   }
   
   .tab-button {
+    font-size: 0.9rem;
     padding: 0.8rem 1rem;
-    font-size: 1rem;
   }
   
   .items-grid {
@@ -269,114 +509,54 @@ h4 {
   }
   
   .detail-label {
-    min-width: auto;
+    margin-bottom: 0.3rem;
   }
-}
-/* Collapsible section styles */
-.race-header,
-.class-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  padding: 1rem;
-  background: rgba(40, 40, 60, 0.8);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid rgba(255, 165, 0, 0.3);
-  margin: -1.5rem -1.5rem 0 -1.5rem;
-  transition: background-color 0.2s ease;
-}
-
-.race-card,
-.class-card {
-  padding-bottom: 0;
-  overflow: hidden;
-}
-
-.race-card:not(:has(.race-details)) .race-header,
-.class-card:not(:has(.class-details)) .class-header {
-  border-radius: 8px;
-}
-
-.toggle-icon {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ffa500;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.race-details,
-.class-details {
-  padding: 1.5rem;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.race-card h3,
-.class-card h3 {
-  margin-bottom: 0;
-}
-
-.race-header:hover,
-.class-header:hover {
-  background: rgba(60, 60, 80, 0.8);
-}
-
-.class-detail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-/* Language section styles */
-.language-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  padding: 1rem;
-  background: rgba(40, 40, 60, 0.8);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid rgba(255, 165, 0, 0.3);
-  margin: -1.5rem -1.5rem 0 -1.5rem;
-  transition: background-color 0.2s ease;
-}
-
-.language-card {
-  padding-bottom: 0;
-  overflow: hidden;
-}
-
-.language-card:not(:has(.language-details)) .language-header {
-  border-radius: 8px;
-}
-
-.language-header:hover {
-  background: rgba(60, 60, 80, 0.8);
-}
-
-.language-card h3 {
-  margin-bottom: 0;
-}
-
-.language-detail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-.language-examples {
-  color: #bbb;
-  font-style: italic;
-  line-height: 1.5;
+  
+  .class-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .spells-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .filter-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .item-filters {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .item-filters .filter-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .centered-details .detail-item {
+    flex-direction: column;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 165, 0, 0.2);
+  }
+  
+  .centered-details .detail-label {
+    text-align: center;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 165, 0, 0.2);
+    padding: 0 0 8px 0;
+    margin-bottom: 8px;
+    flex: 0 0 auto;
+  }
+  
+  .centered-details .detail-value {
+    text-align: center;
+    padding-left: 0;
+  }
 }

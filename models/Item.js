@@ -64,57 +64,5 @@ class Armor extends Item {
   }
 }
 
-// Define weapon instances
-const DAGGER = new Weapon(
-  "weapon_dagger",
-  "Dagger",
-  "A small, easily concealable blade that can be thrown or used for close combat. Its lightweight design makes it perfect for quick strikes.",
-  "common",
-  2, // value in gold
-  1, // weight in pounds
-  ["finesse", "light", "thrown"], // properties
-  null, // requirements
-  false, // attunement
-  "piercing", // damage type
-  "1d4", // damage amount
-  { normal: 20, long: 60 } // range
-);
+module.exports = { Item, Weapon, Armor };
 
-const HEAVY_AXE = new Weapon(
-  "weapon_heavy_axe",
-  "Heavy Battle Axe",
-  "A massive, two-handed axe with a broad, sharp blade capable of delivering devastating blows. Only the strongest warriors can wield it effectively.",
-  "uncommon",
-  30, // value in gold
-  7, // weight in pounds
-  ["heavy", "two-handed"], // properties
-  { strength: 15 }, // requires 15 strength
-  false, // attunement
-  "slashing", // damage type
-  "1d12", // damage amount
-  null // no range
-);
-
-const LONG_BOW = new Weapon(
-  "weapon_longbow",
-  "Long Bow",
-  "A tall bow crafted from flexible yew wood that can launch arrows with tremendous force and accuracy over long distances. Used by skilled archers and hunters.",
-  "common",
-  50, // value in gold
-  2, // weight in pounds
-  ["heavy", "two-handed", "ammunition"], // properties
-  { dexterity: 12 }, // requires 12 dexterity
-  false, // attunement
-  "piercing", // damage type
-  "1d8", // damage amount
-  { normal: 150, long: 600 } // range in feet
-);
-
-// Create weapons collection
-const WEAPONS = {
-  DAGGER,
-  HEAVY_AXE,
-  LONG_BOW
-};
-
-export { Item, Weapon, Armor, WEAPONS };

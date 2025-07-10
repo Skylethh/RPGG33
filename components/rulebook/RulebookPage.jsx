@@ -29,7 +29,7 @@ export default function RulebookPage() {
 
   return (
     <div className="rulebook-container">
-      <h1>DragonQuest AI Rulebook</h1>
+      <h1>SAGAI Rulebook</h1>
       <div className="rulebook-tabs">
         <button 
           className={`tab-button ${activeTab === 'races' ? 'active' : ''}`} 
